@@ -29,7 +29,8 @@
           }
         }
         li:has(ul) {
-          // list-style-type: none;
+          // This is very important to remove the default list style that comes with dataview. It does not work with my custom rendering.
+          list-style-type: none;
           p {
             background-color: #{shared.$primary} !important;
           }
