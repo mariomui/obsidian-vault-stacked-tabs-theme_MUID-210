@@ -62,3 +62,48 @@
   stroke-width: 0.5em;
 }
 // body.outliner-plugin-dnd:not(.outliner-plugin-dragging) .cm-fold-indicator .collapse-indicator
+
+// # QUIET OUTLINE PLUGIN
+@function is-even($x) {
+  @return $x % 2 == 0;
+}
+// alternate colors for quiet outline list items using the provided id no.
+@mixin loopOutline($start, $end) {
+  @for $i from $start through $end {
+    #no-#{$i}.n-tree-node.n-tree-node--selectable {
+      p {
+        @if is-even($i) {
+          color: #{shared.$embedPrimaryLinkColor};
+        } @else {
+          color: #{shared.$altLinkColor};
+        }
+      }
+    }
+  }
+}
+.quiet-outline {
+  @include loopOutline(0, 50);
+  .n-tree .n-tree-node-content {
+    // min-width: fit-content;
+    max-width: 90%;
+    .n-tree-node-content__text {
+      div {
+        // overflow: hidden !important;
+        p {
+          max-width: unset;
+          line-height: 1.5em; // each line * 2 = 3 + .1em top adn bottom = ...
+          max-height: 3.2em !important; // 3.2 em
+          white-space: pre-wrap;
+          // max-width: 98%;
+          // display: block; // https://caniuse.com/?search=webkit-box all browsersuse webkit-box
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+  // @include loopOutline(1, 6);
+}
