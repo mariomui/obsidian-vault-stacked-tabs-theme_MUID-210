@@ -25,7 +25,7 @@
   // border-radius: 0 0 100% 100%;
   // clip-path: polygon(0 26%, 50% 40%, 100% 25%);
   // clip-path: polygon(0 26%, 50% 57%, 100% 25%);
-  margin-top: 0.1em;
+  margin-top: -0.2em;
   // margin-bottom: 0.3em;
   padding: 0.1em 0.1em 0 0.1em;
 }
@@ -95,11 +95,11 @@
       /* ## H1 when there is a tag inside it.  */
       &.cm-line:has(> span.cm-hashtag) {
         @include orange-to-right-color();
-        outline: 2px solid --material-color-deep-orange-300;
+        outline: 2px solid #{shared.$material-color-deep-orange-300};
       }
       &.cm-line:has(> span.cm-hashtag) > span {
         background-color: unset;
-        color: var(--material-color-deep-orange-300);
+        color: #{shared.$material-color-deep-orange-300};
       }
 
       /* on hover blinks */
@@ -144,6 +144,15 @@
 
     @include manuBackgroundImageLG($baseHue: -30deg, $hueAdd: 100deg);
   }
+
+  // # TEST OUT h2s being indigo/blue
+  // .cm-header-2:not(.cm-formatting) {
+  //   display: inline-block;
+  //   background: shared.$material-color-indigo-900;
+  //   width: 94%;
+  //   line-height: 2;
+  //   border-radius: 0 6em 0 6px;
+  // }
   .cm-header-2:last-child:after {
     $bar-color: shared.$material-color-red-100;
     $bar-outline-color: shared.$material-color-red-200;
@@ -264,6 +273,7 @@ $header-levels: 6;
       &.cm-line {
         > *:last-child::before {
           content: repeat(":", $i - 1) + " ";
+
           @extend %header-indent-position;
         }
       }
