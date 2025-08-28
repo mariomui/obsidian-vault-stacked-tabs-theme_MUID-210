@@ -107,3 +107,23 @@
   }
   // @include loopOutline(1, 6);
 }
+
+// // Chronos Plugin
+// why isnt this working?
+.cm-contentContainer {
+  .cm-preview-code-block.cm-embed-block.markdown-rendered:has(
+      .chronos-timeline-container
+    ) {
+    width: 90vw !important;
+    .chronos-timeline-container {
+      width: 100%;
+    }
+  }
+}
+.chronos-timeline-container {
+  .vis-item-overflow {
+    .vis-item-content {
+      white-space: pre-wrap;
+    }
+  }
+}
