@@ -9,6 +9,7 @@
   max-width: 90%;
   text-overflow: ellipsis;
   white-space: pre-wrap;
+  margin-right: 0.3em;
 }
 /*
 A-source: https://forum.obsidian.md/t/adding-color-to-obsidian-a-rainbow-of-possibility/12805/11
@@ -25,6 +26,9 @@ B-source: https://raw.githubusercontent.com/obsidian-community/obsidian-hub/main
     .nav-folder-title {
       .nav-folder-title-content {
         @extend %line-wrap-for-nav-title;
+        border-right: 1px solid beige;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
       }
     }
   }
