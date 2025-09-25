@@ -30,23 +30,23 @@
 // # LIST ITEMS
 
 @mixin evenListColorAndBackground {
-  background: shared.$material-color-purple-200;
-
   .cm-comment.cm-templater-command {
+    background: shared.$material-color-purple-200;
     color: shared.$material-color-purple-900;
   }
 }
 @mixin oddListColorAndBackground {
-  background: shared.$material-color-purple-100;
-
   .cm-comment.cm-templater-command {
+    background: shared.$material-color-purple-100;
     color: shared.$material-color-blue-900;
   }
 }
+
+// TODO Consider gettting rid of this code and only targeting commented code.
 .cm-contentContainer {
   .templater-command-bg.cm-line[style*="padding-inline-start: 16px;"] {
     font-weight: bold;
-    color: shared.$bookSource;
+    // color: shared.$bookSource;
   }
   .templater-command-bg.cm-line[style*="padding-inline-start: 16px;"]:nth-child(
       odd
@@ -54,22 +54,45 @@
     @include oddListColorAndBackground();
   }
 }
-.templater-command-bg.cm-line[style*="padding-inline-start: 16px;"]:nth-child(
-    even
-  ) {
+
+// The Following css highlights any indented line (every other) in templater
+// Learn to live with unhighlighted documentation in templater
+
+// .templater-command-bg.cm-line[style*="padding-inline-start: 16px;"]:nth-child(
+//     even
+//   ) {
+//   @include evenListColorAndBackground();
+// }
+
+// TODO Think about consolidating all the comments using one standard even odd code.
+.templater-command-bg.cm-line:is(
+    [style*="padding-inline-start: 13px;"],
+    [style*="padding-inline-start: 16px;"],
+    [style*="padding-inline-start: 29px;"],
+    [style*="padding-inline-start: 33px;"]
+  ):nth-child(even) {
   @include evenListColorAndBackground();
 }
-
+.templater-command-bg.cm-line:is(
+    [style*="padding-inline-start: 13px;"],
+    [style*="padding-inline-start: 16px;"],
+    [style*="padding-inline-start: 29px;"],
+    [style*="padding-inline-start: 33px;"]
+  ):nth-child(odd) {
+  @include oddListColorAndBackground();
+}
 // 2nd level
 .templater-command-bg.cm-line:is(
     [style*="padding-inline-start: 36px;"],
-    [style*="padding-inline-start: 34px;"]
+    [style*="padding-inline-start: 34px;"],
+    [style*="padding-inline-start: 46px;"]
   ):nth-child(even) {
   @include evenListColorAndBackground();
 }
 .templater-command-bg.cm-line:is(
     [style*="padding-inline-start: 36px;"],
-    [style*="padding-inline-start: 34px;"]
+    [style*="padding-inline-start: 34px;"],
+    [style*="padding-inline-start: 46px;"]
   ):nth-child(odd) {
   @include oddListColorAndBackground();
 }
