@@ -1,4 +1,5 @@
 @use "./shared/index.scss" as shared;
+
 .dvjs-no-overflow {
   .cm-contentContainer {
     .cm-embed-block {
@@ -42,3 +43,12 @@
 //     }
 //   }
 // }
+
+// Create a opaque backdrop so that any changes to backgrounds wont render table text unreadable.
+.dvjs-custom-table-bg {
+  .block-language-dataviewjs {
+    tr {
+      background: #{shared.$shade} !important;
+    }
+  }
+}
