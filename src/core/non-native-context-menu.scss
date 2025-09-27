@@ -1,0 +1,64 @@
+@use "sass:list";
+@use "@shared" as shared;
+// interimming.
+// TODO Since the css is shared between the explorer and the editor, it is impossible to target-omit a menu time (eg. "Create Folder Note")
+
+$menu-items-to-show: (
+  "Copy link to block",
+  "Create folder note",
+  "Read selected text",
+  "Get etymology of"
+);
+$menu-items-to-hide: (
+  "Add external link",
+  "Add link",
+  "Add to custom dictionary",
+  "Add to dictionary",
+  "Copy block embed",
+  "Copy",
+  "Cut",
+  "Erase highlight",
+  "Extract current selection...",
+  "Insert",
+  "Format",
+  "Highlight",
+  "Look up",
+  "Paragraph",
+  "Paste as plain text",
+  "Paste",
+  "Search for",
+  "Select all",
+  "Set priority"
+);
+
+.menu {
+  .menu-scroll {
+    display: flex;
+  }
+  .menu-item.tappable {
+    &[data-stylizer-title*="Get etymology of"] {
+      .menu-item-icon::before {
+        content: "\f1ea"; /* FontAwesome icon code for book */
+      }
+      color: #{shared.$offListItemColor};
+    }
+    @for $i from 1 through length($menu-items-to-hide) {
+      $_menu-item-to-hide: nth($menu-items-to-hide, $i);
+      &[data-stylizer-title*="#{$_menu-item-to-hide}"] {
+        display: none;
+        & ~ .menu-separator {
+          display: none;
+        }
+      }
+    }
+    @for $i from 1 through length($menu-items-to-show) {
+      $_menu-item-to-show: nth($menu-items-to-show, $i);
+      &[data-stylizer-title*="#{$_menu-item-to-show}"] {
+        order: #{$i + 3};
+        @if $_menu-item-to-show == "Get etymology of" {
+          order: 0 !important;
+        }
+      }
+    }
+  }
+}

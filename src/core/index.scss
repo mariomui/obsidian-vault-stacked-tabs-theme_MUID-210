@@ -1,8 +1,11 @@
 @use "@shared" as shared;
-@forward "footnote.scss";
+
 @forward "blockquote.scss";
-@forward "metadata-container.scss";
+@forward "footnote.scss";
 @forward "frontmatter/index.scss";
+@forward "metadata-container.scss";
+
+@forward "non-native-context-menu.scss";
 
 .cm-contentContainer {
   .HyperMD-list-line.cm-line:has(img[alt$="svg"]) {
