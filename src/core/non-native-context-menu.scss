@@ -4,12 +4,12 @@
 // TODO Since the css is shared between the explorer and the editor, it is impossible to target-omit a menu time (eg. "Create Folder Note")
 
 $menu-items-to-show: (
-  "Copy link to block",
-  "Create folder note",
+  "Get etymology of" "Copy link to block",
   "Read selected text",
-  "Get etymology of"
+  "Create folder note"
 );
 $menu-items-to-hide: (
+  "Look up",
   "Add external link",
   "Add link",
   "Add to custom dictionary",
@@ -31,6 +31,50 @@ $menu-items-to-hide: (
   "Set priority"
 );
 
+$special-menu-items-to-show: (
+  "Merge notes",
+  "Open in second window",
+  "Open in other editor",
+  "Rename...",
+  "Folder Note Commands",
+  "Delete"
+);
+$special-menu-items-to-hide: (
+  "Force update by overwriting",
+  "Create a command for this file",
+  "Reveal file in navigation",
+  "Open in default app",
+  "Open link",
+  "Open in new tab",
+  "Open to the right",
+  "Open in new window",
+  "Add link",
+  "Add external link",
+  "Edit link",
+  "Paragraph",
+  "Insert",
+  "Extract current selection...",
+  "Cut",
+  "Copy",
+  "Paste",
+  "Paste as plain text",
+  "Select all",
+  "Copy Obsidian URL",
+  "Bookmark...",
+  "Better Export PDF",
+  "Start presentation",
+  "Search for “",
+  "Read the note",
+  "Share note on the web",
+  "Copy shared link",
+  "Copy as HTML",
+  "Edit Extension",
+  "Lint file",
+  "Ignore file in Linter",
+  "Export to...",
+  "Update literature note"
+);
+
 .menu {
   .menu-scroll {
     display: flex;
@@ -42,6 +86,36 @@ $menu-items-to-hide: (
       }
       color: #{shared.$offListItemColor};
     }
+    &[data-stylizer-title*="Open in other editor"] {
+      .menu-item-icon::before {
+        content: "🐵"; /* FontAwesome icon code for file-alt */
+      }
+      color: #{shared.$offListItemColor};
+    }
+    &[data-stylizer-title*="Merge notes"] {
+      .menu-item-icon::before {
+        content: "🔀"; /* FontAwesome icon code for file-alt */
+      }
+      color: #{shared.$offListItemColor};
+    }
+
+    @for $i from 1 through length($special-menu-items-to-hide) {
+      $special-menu-item-to-hide: nth($special-menu-items-to-hide, $i);
+      &[data-stylizer-title*="#{$special-menu-item-to-hide}"] {
+        display: none;
+        & ~ .menu-separator {
+          display: none;
+        }
+        order: #{$i + 33}; // offset is 33;
+      }
+    }
+    @for $i from 1 through length($special-menu-items-to-show) {
+      $special-menu-item-to-show: nth($special-menu-items-to-show, $i);
+      &[data-stylizer-title*="#{$special-menu-item-to-show}"] {
+        order: #{$i + 34}; // offset is 34;
+      }
+    }
+
     @for $i from 1 through length($menu-items-to-hide) {
       $_menu-item-to-hide: nth($menu-items-to-hide, $i);
       &[data-stylizer-title*="#{$_menu-item-to-hide}"] {
@@ -54,10 +128,7 @@ $menu-items-to-hide: (
     @for $i from 1 through length($menu-items-to-show) {
       $_menu-item-to-show: nth($menu-items-to-show, $i);
       &[data-stylizer-title*="#{$_menu-item-to-show}"] {
-        order: #{$i + 3};
-        @if $_menu-item-to-show == "Get etymology of" {
-          order: 0 !important;
-        }
+        order: #{$i + 22}; // offset is 22;
       }
     }
   }
