@@ -4,18 +4,21 @@
 // TODO Since the css is shared between the explorer and the editor, it is impossible to target-omit a menu time (eg. "Create Folder Note")
 
 $menu-items-to-show: (
-  "Get etymology of" "Copy link to block",
-  "Read selected text",
-  "Create folder note"
+  "Copy link to heading",
+  "Extract this heading",
+  "Get etymology of",
+  "Read selected text"
 );
 $menu-items-to-hide: (
+  "Copy link to block",
+  "Copy block embed",
+  "Bookmark this heading...",
   "Look up",
   "Add external link",
   "Add link",
   "Add to custom dictionary",
   "Add to dictionary",
-  "Copy block embed",
-  "Copy",
+  // "Copy",
   "Cut",
   "Erase highlight",
   "Extract current selection...",
@@ -31,15 +34,52 @@ $menu-items-to-hide: (
   "Set priority"
 );
 
+$menu-items-with-seperators: (
+  // "New folder",
+  "New note",
+
+  "Count Words",
+  // "Add props to folder's notes"
+  "Open in other editor",
+
+  "Remove props from folder's notes"
+);
+
 $special-menu-items-to-show: (
+  "Count Words",
+  "New folder",
+  "New note",
+  "Reveal in Finder",
+  "Rename...",
+  "Move folder to",
+  "Move file to...",
+  "Merge entire file with...",
+  "Merge folder",
   "Merge notes",
   "Open in second window",
   "Open in other editor",
-  "Rename...",
+  "Rename this heading...",
+  "Create Longform Project",
+  "Open daily notes for this folder",
+  "Add props to folder's notes",
+  "Remove props from folder's notes",
   "Folder Note Commands",
+  "Create folder note",
+  "Duplicate",
   "Delete"
 );
 $special-menu-items-to-hide: (
+  "Export folder to PDF",
+  "Export to PDF...",
+  "Search in folder",
+  "New canvas",
+  "New kanban board",
+  "Create new note from template",
+  "Import folder as Media DB entries",
+  "Turn into folder note for",
+  "Lint folder",
+  "Ignore folder in Linter",
+  "Copy heading embed",
   "Force update by overwriting",
   "Create a command for this file",
   "Reveal file in navigation",
@@ -55,7 +95,6 @@ $special-menu-items-to-hide: (
   "Insert",
   "Extract current selection...",
   "Cut",
-  "Copy",
   "Paste",
   "Paste as plain text",
   "Select all",
@@ -76,9 +115,15 @@ $special-menu-items-to-hide: (
 );
 
 .menu {
+  .menu-group {
+    display: flex;
+    flex-direction: column;
+    // without applying flex to the parent, menu items are trapped in groups and can not be reordered using the order property.
+  }
   .menu-scroll {
     display: flex;
   }
+  // Adds extra icons to menu items without.
   .menu-item.tappable {
     &[data-stylizer-title*="Get etymology of"] {
       .menu-item-icon::before {
@@ -87,6 +132,7 @@ $special-menu-items-to-hide: (
       color: #{shared.$offListItemColor};
     }
     &[data-stylizer-title*="Open in other editor"] {
+      display: block !important;
       .menu-item-icon::before {
         content: "🐵"; /* FontAwesome icon code for file-alt */
       }
@@ -98,37 +144,62 @@ $special-menu-items-to-hide: (
       }
       color: #{shared.$offListItemColor};
     }
+    // Remove Copy manually because css regex is too stupid to.
+    &[data-stylizer-title="Copy"] {
+      display: none;
+    }
 
+    $special-menu-items-offset: 54;
+    $special-menu-items-to-show-count: length($special-menu-items-to-show);
+
+    // Governs wikilink context menu items.
     @for $i from 1 through length($special-menu-items-to-hide) {
       $special-menu-item-to-hide: nth($special-menu-items-to-hide, $i);
-      &[data-stylizer-title*="#{$special-menu-item-to-hide}"] {
+      &[data-stylizer-title^="#{$special-menu-item-to-hide}"] {
         display: none;
         & ~ .menu-separator {
           display: none;
         }
-        order: #{$i + 33}; // offset is 33;
-      }
-    }
-    @for $i from 1 through length($special-menu-items-to-show) {
-      $special-menu-item-to-show: nth($special-menu-items-to-show, $i);
-      &[data-stylizer-title*="#{$special-menu-item-to-show}"] {
-        order: #{$i + 34}; // offset is 34;
       }
     }
 
-    @for $i from 1 through length($menu-items-to-hide) {
+    @for $i from 1 through $special-menu-items-to-show-count {
+      $special-menu-item-to-show: nth($special-menu-items-to-show, $i);
+      &[data-stylizer-title^="#{$special-menu-item-to-show}"] {
+        order: #{$i + $special-menu-items-offset};
+      }
+    }
+
+    // Governs on-editor context menu items.
+    $menu-items-offset: 22;
+    $menu-items-to-hide-count: length($menu-items-to-hide);
+    @for $i from 1 through $menu-items-to-hide-count {
       $_menu-item-to-hide: nth($menu-items-to-hide, $i);
-      &[data-stylizer-title*="#{$_menu-item-to-hide}"] {
+      &[data-stylizer-title^="#{$_menu-item-to-hide}"] {
         display: none;
         & ~ .menu-separator {
           display: none;
         }
+        // order: #{$i + $menu-items-offset};
       }
     }
     @for $i from 1 through length($menu-items-to-show) {
       $_menu-item-to-show: nth($menu-items-to-show, $i);
-      &[data-stylizer-title*="#{$_menu-item-to-show}"] {
-        order: #{$i + 22}; // offset is 22;
+      &[data-stylizer-title^="#{$_menu-item-to-show}"] {
+        order: #{$i + $menu-items-offset}; // offset is 22;
+      }
+    }
+  }
+  .menu-item.tappable {
+    @for $i from 1 through length($menu-items-with-seperators) {
+      $menu-items-with-seperator: nth($menu-items-with-seperators, $i);
+      &[data-stylizer-title="#{$menu-items-with-seperator}"] {
+        .menu-item-title::after {
+          content: "";
+          display: block;
+          border-bottom: 1px solid #{shared.$offListItemColor};
+          position: relative;
+        }
       }
     }
   }
