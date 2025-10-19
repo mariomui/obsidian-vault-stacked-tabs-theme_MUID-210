@@ -1,4 +1,4 @@
-@use "./shared/index.scss" as shared;
+@use "@shared" as shared;
 @use "sass:math";
 
 //  make some extended thing so that both views are reusing styles
@@ -11,9 +11,9 @@
   padding-left: 0.1em;
 }
 
-// # dataview
+// --- start dataview section --- ///
 
-// ## Dataview:Shared between views
+// # Dataview:Shared between views
 .markdown-source-view,
 .markdown-reading-view {
   .block-language-dataview {
@@ -23,7 +23,7 @@
   }
 }
 
-// ## Dataview: Reading View
+// # Dataview: Reading View
 .markdown-reading-view {
   .markdown-preview-view.markdown-rendered {
     .markdown-preview-sizer.markdown-preview-section {
@@ -38,8 +38,10 @@
     }
   }
 }
+// --- end dataview section --- ///
 
-// # Source view remove embedded backlinks
+// --- start source view section --- //
+// # Source View: remove embedded backlinks
 .workspace-leaf-content {
   .view-content {
     .markdown-source-view {
@@ -51,7 +53,7 @@
     }
   }
 }
-// # Source view
+
 .markdown-source-view {
   /* Remove scroll on embeds. */
 
@@ -115,7 +117,25 @@
   }
 }
 
-// ---------- end dataview section ---- ///
+// # Source View: Add alt list item colors to embedded lists in callouts
+.markdown-source-view {
+  .callout-content {
+    .internal-embed.markdown-embed.is-loaded {
+      .markdown-embed-content {
+        .markdown-preview-view {
+          .markdown-preview-sizer.markdown-preview-section {
+            .el-ul ul.has-list-bullet {
+              li:nth-of-type(odd) {
+                color: #{shared.$altListItemColor};
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// --- end source view section --- //
 
 /** WORKING EMBED CONTAINER **/
 // embedded content
@@ -236,6 +256,7 @@ span[alt*="nlk"].internal-embed.markdown-embed
   padding-left: 0 !important;
 }
 
+// ## END NLK SECTION
 // # Shorten the link for maximum embed room.
 
 :is(.canvas-wrapper, .markdown-source-view)
