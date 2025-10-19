@@ -151,6 +151,12 @@
   }
 }
 
+.popover.hover-popover {
+  // remove frontmatter on popover.
+  .metadata-container {
+    display: none;
+  }
+}
 // # Create word wrap on code during popover
 .popover.hover-popover {
   .markdown-embed.is-loaded {
