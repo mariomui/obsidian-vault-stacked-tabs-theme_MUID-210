@@ -1,6 +1,6 @@
 // source: https://github.com/zcysxy/Obsidian-Terminal-Theme/blob/main/theme.css
 
-@use "./shared/index.scss" as shared;
+@use "@shared" as shared;
 /* STATUS BAR */
 .status-bar {
   --status-bar-height: 21px;

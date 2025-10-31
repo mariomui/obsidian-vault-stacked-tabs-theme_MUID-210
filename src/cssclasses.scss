@@ -1,4 +1,4 @@
-@use "./shared/index.scss" as shared;
+@use "@shared" as shared;
 
 .dvjs-no-overflow {
   .cm-contentContainer {
@@ -49,6 +49,31 @@
   .block-language-dataviewjs {
     tr {
       background: #{shared.$shade} !important;
+    }
+  }
+}
+
+.chronos-vertical {
+  .cm-contentContainer {
+    .cm-preview-code-block.cm-embed-block.markdown-rendered:has(
+        .chronos-timeline-container
+      ) {
+      // width: unset !important;
+      .chronos-timeline-container {
+        // width: unset !important;
+      }
+    }
+  }
+  .chronos-timeline-container {
+    .vis-timeline {
+      .vis-group {
+        .vis-item-overflow {
+          overflow: unset;
+          .vis-item.vis-background {
+            max-width: 3.2em;
+          }
+        }
+      }
     }
   }
 }

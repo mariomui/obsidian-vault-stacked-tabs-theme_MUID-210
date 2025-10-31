@@ -1,4 +1,4 @@
-@use "./shared/index.scss" as shared;
+@use "@shared" as shared;
 
 .markdown-source-view {
   .cm-contentContainer {
