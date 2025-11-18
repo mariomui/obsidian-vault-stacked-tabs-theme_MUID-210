@@ -15,6 +15,7 @@
   }
 }
 
+// # general popover and slides styling
 .slides-container,
 .popover.hover-popover {
   // dataview padding
@@ -27,8 +28,13 @@
     }
   }
 
+  // embeded content in popover.
   .markdown-embed {
     .markdown-preview-view.markdown-rendered {
+      .metadata-container {
+        display: none;
+      }
+
       .markdown-preview-sizer.markdown-preview-section {
         // [!warning] This code requires the exact filtering cascade to only show elems between two specific h1s (- and =).
         // Dissapear all the divs that follow the h1 - but are not the the = sign.(effectively dissapearing any $elems that aren't - and =)
@@ -40,6 +46,10 @@
         // Effectively reappears the = content as as well as the content under ---
         div:has(> h1[data-heading="="]) ~ * {
           display: initial;
+          // ibidem css conflicts. UB: Shows metadata properities title.
+          .metadata-properties-title {
+            display: none !important;
+          }
         }
 
         > div:has(> h1[data-heading="-"]) {

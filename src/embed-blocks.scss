@@ -218,6 +218,31 @@ span[alt*="nlk"] {
     padding-left: 0px !important;
     margin: 0;
   }
+
+  // remove the = heading in reading view.
+  .internal-embed.markdown-embed.inline-embed.is-loaded {
+    .markdown-preview-sizer.markdown-preview-section h1[data-heading="="] {
+      display: none;
+    }
+  }
+
+  // remove the first child in olk view.
+  // .callout-content {
+  //   span[alt="olk"] {
+  //     .markdown-rendered
+  //       > .markdown-preview-section
+  //       > .markdown-preview-pusher
+  //       + div:not(.mod-ui)
+  //       > :first-child,
+  //     .markdown-rendered
+  //       > .markdown-preview-section
+  //       > .mod-ui
+  //       + div:not(.mod-ui)
+  //       > :first-child {
+  //       // display: none;
+  //     }
+  //   }
+  // }
 }
 
 /** ## Tranclusion/Embed sections */
