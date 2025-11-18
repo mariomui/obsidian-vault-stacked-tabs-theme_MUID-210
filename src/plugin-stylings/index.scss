@@ -120,10 +120,60 @@
     }
   }
 }
+
 .chronos-timeline-container {
   .vis-item-overflow {
     .vis-item-content {
       white-space: pre-wrap;
+    }
+  }
+
+  // make sure the flag color is cyan so that it can match common duration events so that i can split two different chronos timelines and easily match by color
+  .vis-background {
+    .vis-custom-time-marker {
+      background-color: var(--chronos-color-cyan) !important;
+    }
+  }
+}
+
+// # FOLDER NOTE PLUGIN
+
+// ##  Folder Note File Overview
+.block-language-folder-overview {
+  background-color: #{shared.$material-color-purple-900};
+  border: 1px solid #{shared.$material-color-light-green-a400};
+  border-radius: 0.5rem 0.5rem;
+  .folder-overview {
+    position: relative;
+    padding: 0 0.5em 1em 0.5em;
+    .folder-overview-title::before {
+      content: "📂";
+      border: 1px solid gray;
+      font-size: 70%;
+      border-radius: 0.5rem 0.5rem;
+      background: #{shared.getRandomColor(shared.$colorsMap)};
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateY(-50%);
+    }
+    .folder-overview-title {
+      color: #{shared.$material-color-purple-700};
+      font-size: large;
+      text-shadow: 1px 1px 2px #{shared.$material-color-deep-purple-200};
+      @include orange-to-right-color(
+        $deg: to bottom right,
+        $col1: #{shared.$material-color-green-300},
+        $col2: #{shared.$material-color-green-900}
+      );
+      padding: 0.1em 0.1em 0.2em 0.1em;
+      border-radius: 0.5em 1.8em 0.3em 0.5em;
+      outline: 2px solid #{shared.$material-color-brown-900};
+    }
+    li.folder-overview-list.file-link + li.folder-overview-list.file-link {
+      .folder-overview-list-item a.internal-link {
+        color: #{shared.$material-color-green-300};
+      }
     }
   }
 }
