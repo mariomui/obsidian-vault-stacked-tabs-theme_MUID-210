@@ -30,6 +30,27 @@
       .block-language-dataviewjs {
         @extend %dataview-container;
         padding: 0.5em 1em;
+        .dataview.dataview-ul.dataview-result-list-ul {
+          p {
+            background-color: #{shared.$material-color-purple-700};
+          }
+          span {
+            display: block;
+            background-color: #{shared.$material-color-purple-700};
+          }
+          .dataview.dataview-ul.dataview-result-list-ul {
+            p {
+              background-color: unset;
+            }
+            span {
+              display: block;
+              background-color: unset;
+            }
+          }
+        }
+        li:has(ul.dataview.dataview-ul.dataview-result-list-ul) {
+          list-style: none;
+        }
       }
       // Make the inner dataview box be 90% of the containing embed box
       > div:last-child {
