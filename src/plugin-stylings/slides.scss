@@ -173,3 +173,21 @@
   transform: translate(-50%, -50%);
   font-size: 100%;
 }
+
+// all h2s should pop out when there are strong tags surrounding it.
+// chs are better for spacing in typography especially for even spacing when fonts can be too narrow for relative em.
+.reveal.slide {
+  .slides {
+    section {
+      h2[data-heading*="*"] {
+        strong {
+          background: green !important;
+          padding-left: 0.3ch;
+          padding-right: 0.3ch;
+          margin-left: 0.1ch;
+          margin-right: 0.1ch;
+        }
+      }
+    }
+  }
+}
