@@ -1,0 +1,36 @@
+@use "@shared" as shared;
+.bases-table-container.mod-multiline .bases-table-cell {
+  align-items: anchor-center;
+}
+.bases-view {
+  .bases-group-heading {
+    background: #e4883c;
+    // a lighter shade of orange so it isnt as garish (testing)
+    color: shared.$primary;
+    .bases-group-property {
+      color: #3e2723;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+  }
+  .bases-tbody {
+    .bases-tr:nth-child(odd) {
+      background: shared.$material-color-grey-900;
+      color: shared.$material-color-grey-300;
+    }
+    .bases-tr:nth-child(even) {
+      background: shared.$material-color-grey-800;
+      color: shared.$material-color-orange-100;
+    }
+    .bases-tr {
+      .bases-td {
+        &:nth-child(1) {
+          padding-left: 2em;
+        }
+      }
+    }
+    // .bases-tr:hover {
+    //   background: shared.$shade;
+    // }
+  }
+}

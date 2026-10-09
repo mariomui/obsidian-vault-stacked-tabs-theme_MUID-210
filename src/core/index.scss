@@ -6,6 +6,7 @@
 @forward "metadata-container.scss";
 
 @forward "non-native-context-menu.scss";
+@forward "bases.scss";
 
 .cm-contentContainer {
   .HyperMD-list-line.cm-line:has(img[alt$="svg"]) {
