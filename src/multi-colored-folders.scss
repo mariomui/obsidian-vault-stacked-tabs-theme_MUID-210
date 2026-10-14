@@ -112,8 +112,8 @@ B-source: https://raw.githubusercontent.com/obsidian-community/obsidian-hub/main
     $foldZ-datum
   );
   @each $foldmip in $file-fold-colors-map {
-    $dp: map-get($foldmip, "prefix");
-    $fold-color: map-get($foldmip, "color");
+    $dp: map.get($foldmip, "prefix");
+    $fold-color: map.get($foldmip, "color");
     .nav-files-container > div > .nav-folder {
       &:has(.nav-folder-title[data-path^="#{$dp}"]) {
         background-color: var(#{$fold-color}) !important;
