@@ -48,6 +48,7 @@ const config = {
         test: /\.(css|sass|scss)$/,
         // https://webpack.js.org/configuration/module/#ruleuse
         exclude: /node_modules/,
+
         use: [
           // RTL
           // https://github.com/webdiscus/html-bundler-webpack-plugin?tab=readme-ov-file#features
@@ -56,7 +57,18 @@ const config = {
             loader: "css-loader",
           },
           "postcss-loader",
-          "sass-loader",
+          // "sass-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              // api: "modern",
+              sassOptions: {
+                silenceDeprecations: ["legacy-js-api"],
+                // ! DO NOT use loadpaths from sass yet. It is buggy.
+                // loadPaths: [path.resolve(__dirname, "src/shared")],
+              },
+            },
+          },
         ],
       },
       {
