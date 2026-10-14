@@ -1,11 +1,18 @@
-@use "sass:color" as color;
-@use "./material-ui-colors" as MAT_COLORS;
 @use "@shared" as shared;
+
+@use "sass:map";
+@use "sass:list";
+@use "sass:meta";
 
 // # Global Shared variables
 
 // ## Knobs
 
+:root {
+  .HyperMD-list-line {
+    --h1-color: #{shared.$material-color-red-300};
+  }
+}
 // ## H1 Mixins
 // ### H1 background color color
 @mixin orange-to-right-color(
@@ -16,42 +23,6 @@
   background-image: linear-gradient($deg, $col1, $col2);
 }
 
-// ## Base header style
-@mixin shareHeaderStyle($bar-outline-color) {
-  content: "";
-  display: block;
-  height: 0.9em;
-  outline: 1px solid #{$bar-outline-color};
-  // border-radius: 0 0 100% 100%;
-  // clip-path: polygon(0 26%, 50% 40%, 100% 25%);
-  // clip-path: polygon(0 26%, 50% 57%, 100% 25%);
-  margin-top: -0.2em;
-  // margin-bottom: 0.3em;
-  padding: 0.1em 0.1em 0 0.1em;
-}
-// ## HeaderBgStyling
-// ### HeaderBgStyling.Clipping
-@mixin clipPath($base: 50%, $addend: 5%) {
-  $calced: calc($base + $addend);
-  clip-path: polygon(0 26%, 50% #{$calced}, 100% 25%);
-}
-// ### HeaderBgStyling.BaseColors
-@mixin manuBackgroundImageLG(
-  $bar-color: shared.$bar-color,
-  $bar-outline-color: shared.$bar-outline-color,
-  $baseHue: -30deg,
-  $hueAdd: 0deg
-) {
-  $calculatedHue: calc($baseHue + $hueAdd);
-  background-image: repeating-linear-gradient(
-    -75deg,
-    #{$bar-color} 0%,
-    color.adjust($bar-color, $hue: $calculatedHue) 4%,
-    color.adjust($bar-color, $hue: calc($calculatedHue - 10deg)) 8%,
-    #{$bar-outline-color} 10%
-  );
-}
-
 /* # H1 styling Source */
 
 // Styling headers and list items that use ##
@@ -59,9 +30,9 @@
 .markdown-reading-view {
   .markdown-preview-sizer.markdown-preview-section {
     h1[data-heading] {
-      @include orange-to-right-color();
+      @include shared.orange-to-right-color();
       border: 2px solid #{shared.$material-color-brown-900};
-      color: var(--material-color-brown-50);
+      color: #{shared.$material-color-brown-50};
       padding: 0.2em 1em;
       border-radius: 0.5em 1.8em 0.3em 0.5em;
     }
@@ -85,7 +56,7 @@
   .cm-contentContainer {
     .HyperMD-header.HyperMD-header-1 {
       &.cm-line {
-        @include orange-to-right-color();
+        @include shared.orange-to-right-color();
         border: 2px solid #{shared.$material-color-brown-900};
         color: var(--material-color-brown-50);
         padding: 0.2em 1em 0 1em;
@@ -94,7 +65,7 @@
 
       /* ## H1 when there is a tag inside it.  */
       &.cm-line:has(> span.cm-hashtag) {
-        @include orange-to-right-color();
+        @include shared.orange-to-right-color();
         outline: 2px solid #{shared.$material-color-deep-orange-300};
       }
       &.cm-line:has(> span.cm-hashtag) > span {
@@ -130,90 +101,90 @@
 // # Custom header underbar
 
 .HyperMD-header {
-  $base-width-percentage: 100%;
-  $multiple: 13%;
   //shared
   :is(
-      .cm-header-2,
-      .cm-header-3,
-      .cm-header-4,
-      .cm-header-5,
-      .cm-header-6
-    ):last-child:after {
-    @include shareHeaderStyle((shared.$bar-outline-color));
+    .cm-header-2,
+    .cm-header-3,
+    .cm-header-4,
+    .cm-header-5,
+    .cm-header-6
+  ):last-child {
+    &:after {
+      @include shared.shareHeaderStyle((shared.$bar-outline-color));
 
-    @include manuBackgroundImageLG($baseHue: -30deg, $hueAdd: 100deg);
-  }
-
-  // # TEST OUT h2s being indigo/blue
-  // .cm-header-2:not(.cm-formatting) {
-  //   display: inline-block;
-  //   background: shared.$material-color-indigo-900;
-  //   width: 94%;
-  //   line-height: 2;
-  //   border-radius: 0 6em 0 6px;
-  // }
-  .cm-header-2:last-child:after {
-    $bar-color: shared.$material-color-red-100;
-    $bar-outline-color: shared.$material-color-red-200;
-
-    @include manuBackgroundImageLG(
-      $bar-color: $bar-color,
-      $bar-outline-color: $bar-outline-color
-    );
-    @include clipPath();
-  }
-
-  .cm-header-3:last-child:after {
-    $bar-color: shared.$material-color-deep-orange-700;
-    $bar-outline-color: shared.$material-color-deep-orange-900;
-
-    width: calc($base-width-percentage - 1 * $multiple);
-    margin: 0 auto;
-    @include manuBackgroundImageLG(
-      $bar-color: $bar-color,
-      $bar-outline-color: $bar-outline-color
-    );
-    @include clipPath($addend: 40%);
-  }
-  .cm-header-4:last-child:after {
-    $bar-color: shared.$material-color-green-700;
-    $bar-outline-color: shared.$material-color-green-900;
-
-    width: calc($base-width-percentage - 2 * $multiple);
-    margin: 0 auto;
-    @include manuBackgroundImageLG(
-      $bar-color: $bar-color,
-      $bar-outline-color: $bar-outline-color
-    );
-    @include clipPath($addend: 80%);
-  }
-  .cm-header-5:last-child:after {
-    $bar-color: shared.$material-color-blue-700;
-    $bar-outline-color: shared.$material-color-blue-900;
-
-    width: calc($base-width-percentage - 3 * $multiple);
-    margin: 0 auto;
-    @include manuBackgroundImageLG(
-      $bar-color: $bar-color,
-      $bar-outline-color: $bar-outline-color
-    );
-    @include clipPath($addend: 90%);
-  }
-  .cm-header-6:last-child:after {
-    $bar-color: shared.$material-color-indigo-700;
-    $bar-outline-color: shared.$material-color-indigo-900;
-
-    width: calc($base-width-percentage - 5 * $multiple);
-    margin: 0 auto;
-    @include manuBackgroundImageLG(
-      $bar-color: $bar-color,
-      $bar-outline-color: $bar-outline-color
-    );
-
-    @include clipPath($addend: 80%);
+      @include shared.manuBackgroundImageLG($baseHue: -30deg, $hueAdd: 100deg);
+    }
   }
 }
+
+// # underbar looper
+
+.cm-line.HyperMD-header {
+  $base-width-percentage: 100%;
+  $multiple: 13%;
+  @for $i from 1 through list.length(shared.$underbarColors) {
+    // @debug list.nth(shared.$underbarColors, $i) "name";
+    $underbarColor: list.nth(
+      list.nth(shared.$underbarColors, $i),
+      2
+    ); // This is a tuple;
+
+    &.HyperMD-header-#{$i} span.cm-header.cm-header-#{$i} {
+      &:last-child::after {
+        $bar-color: list.nth($underbarColor, 1);
+        $bar-outline-color: list.nth($underbarColor, 2);
+        $addend: list.nth($underbarColor, 3);
+        @debug $i $bar-color $bar-outline-color $addend "underbar args";
+        @include shared.manuBackgroundImageLG(
+          $bar-color: ($bar-color),
+          $bar-outline-color: ($bar-outline-color)
+        );
+
+        @include shared.clipPath($addend: $addend);
+      }
+    }
+  }
+  .cm-header-3:last-child:after {
+    width: calc($base-width-percentage - 1 * $multiple);
+    margin: 0 auto;
+  }
+  // .cm-header-4:last-child:after {
+  //   //
+  // }
+  .cm-header-5:last-child:after {
+    width: calc($base-width-percentage - 3 * $multiple);
+    margin: 0 auto;
+  }
+
+  .cm-header-6:last-child:after {
+    width: calc($base-width-percentage - 5 * $multiple);
+    margin: 0 auto;
+  }
+}
+
+// @Each has a weird bug where it it doesn't transfer includes into itself.
+// .cm-line.HyperMD-header {
+//   // @each does not work to create anything in my system.
+//   @each $key, $underbarColor in shared.$underbarColors {
+//     &.HyperMD-header-#{$key} span.cm-header.cm-header-#{$key} {
+//       &:last-child {
+//         &:after {
+//           $bar-color: list.nth($underbarColor, 1);
+//           $bar-outline-color: list.nth($underbarColor, 2);
+//           $addend: list.nth($underbarColor, 3);
+//           @debug $key $bar-color $bar-outline-color $addend "underbar args";
+//           @include shared.manuBackgroundImageLG(
+//             $bar-color: ($bar-color),
+//             $bar-outline-color: ($bar-outline-color)
+//           );
+//           @include shared.clipPath($addend: $addend);
+//         }
+//       }
+//     }
+//   }
+// }
+
+// }
 
 /* # H1 styling SPECIAL */
 
@@ -221,10 +192,10 @@
 .markdown-source-view {
   .markdown-embed-content .markdown-preview-sizer.markdown-preview-section {
     h1[data-heading="="] {
-      background: var(--material-color-deep-orange-900);
+      background: shared.$material-color-deep-orange-900;
       outline: 2px solid var(--material-color-brown-700);
       padding: 0.1em 2em;
-      color: var(--tertiary-blue-800);
+      color: shared.$tertiary-blue-800;
       border-radius: 0 0 50px 50px;
     }
   }
@@ -232,8 +203,8 @@
 
 //  ## Private api
 .markdown-preview-sizer.markdown-preview-section h1[data-heading^="---"] {
-  background: var(--material-color-red-900);
-  border: 2px dashed var(--material-color-brown-700);
+  background: shared.$material-color-red-900;
+  border: 2px dashed shared.$material-color-brown-700;
   padding: 0.2em 3em;
   border-radius: 0.5em 1.8em 0.3em 0.5em;
 }
@@ -294,4 +265,39 @@ $header-levels: 6;
 // undo the h5 variant font in app.css
 .HyperMD-header.HyperMD-header-5 {
   font-variant: unset;
+}
+
+.HyperMD-list-line {
+  span.cm-header-1:is(.cm-em, .cm-strong) {
+    color: shared.$material-color-red-a200;
+  }
+  span.cm-header-1.cm-em {
+    & ~ .cm-header-1:not(.cm-em, .cm-strong) {
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        margin: 0 auto;
+        width: 70%;
+        border-bottom: 1px solid shared.$material-color-red-a700;
+        margin-top: 0 !important;
+      }
+    }
+  }
+  span.cm-header-2.cm-em {
+    color: shared.$material-color-deep-orange-a100;
+  }
+  span.cm-header-2.cm-em ~ .cm-header-2:not(.cm-em, .cm-strong) {
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      margin: 0 auto;
+      width: 75%;
+      margin-top: 0 !important;
+      border-bottom: 2px solid shared.$material-color-deep-orange-a200;
+    }
+  }
 }
