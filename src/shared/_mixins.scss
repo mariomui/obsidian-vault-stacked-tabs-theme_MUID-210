@@ -1,6 +1,8 @@
-@use "./material-ui-colors" as MAT_COLORS;
-@use "./wallpapers/wallpapers.scss" as WALLPAPERS;
+@use "@shared/material-ui-colors" as MAT_COLORS;
+@use "@shared/wallpapers/wallpapers.scss" as WALLPAPERS;
 // this material colors are scss only.
+@use "@shared/marionic-colors.scss" as MARIONIC_COLORS;
+@use "sass:color" as color;
 
 @mixin orange-to-right-color(
   $deg: to bottom,
@@ -33,4 +35,42 @@ $header-levels: 6;
   position: relative;
   left: -0.05em;
   color: $color;
+}
+
+// # Header Mixins
+// ## Base header style
+@mixin shareHeaderStyle($bar-outline-color) {
+  content: "";
+  position: relative;
+  display: block;
+  height: 0.3em;
+  outline: 1px solid #{$bar-outline-color};
+  // border-radius: 0 0 100% 100%;
+  // clip-path: polygon(0 26%, 50% 40%, 100% 25%);
+  // clip-path: polygon(0 26%, 50% 57%, 100% 25%);
+  // margin-top: -0.2em;
+  // margin-bottom: 0.3em;
+  // padding: 0.1em 0.1em 0 0.1em;
+}
+// ## HeaderBgStyling
+// ### HeaderBgStyling.Clipping
+@mixin clipPath($base: 50%, $addend: 5%) {
+  $calced: calc(#{$base + $addend});
+  clip-path: polygon(0 26%, 50% #{$calced}, 100% 25%);
+}
+// ### HeaderBgStyling.BaseColors
+@mixin manuBackgroundImageLG(
+  $bar-color: MARIONIC_COLORS.$bar-color,
+  $bar-outline-color: MARIONIC_COLORS.$bar-outline-color,
+  $baseHue: -30deg,
+  $hueAdd: 0deg
+) {
+  $calculatedHue: calc($baseHue + $hueAdd);
+  background-image: repeating-linear-gradient(
+    -75deg,
+    #{$bar-color} 0%,
+    color.adjust($bar-color, $hue: $calculatedHue) 4%,
+    color.adjust($bar-color, $hue: calc($calculatedHue - 10deg)) 8%,
+    $bar-outline-color 10%
+  ) !important;
 }

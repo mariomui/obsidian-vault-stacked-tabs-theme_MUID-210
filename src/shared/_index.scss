@@ -1,11 +1,12 @@
-@use "@shared/wallpapers/wallpapers.scss" as wp;
-
+@forward "@shared/functions.scss";
 @forward "@shared/marionic-colors.scss";
 @forward "@shared/extendme.scss";
 @forward "@shared/mixins.scss";
 @forward "@shared/wallpapers/wallpapers.scss";
 @forward "@shared/material-ui-colors.scss";
-@use "@shared/material-ui-colors.scss" as MAT_COLORS;
+@forward "@shared/base-colors.scss";
+@use "@shared/_material-ui-colors.scss" as MAT_COLORS;
+@use "@shared/wallpapers/_wallpapers.scss" as wp;
 // raw colors isn't used anymore, but i keep it for reference.
 
 $button-border-color: #ffffff;
@@ -51,25 +52,54 @@ $bg-image: unset;
   background-size: 100% 100%;
 }
 
-$ßlocal-wfb--active-vtabheader-bg-image: wp.$dark-blue-grad, wp.$mm-image,
-  wp.$anu-image;
+$ßlocal-wfb--active-vtabheader-bg-image:
+  wp.$dark-blue-grad, wp.$mm-image, wp.$anu-image;
 $local-bg-image: #{$bg-image};
 %bgfixednorepeat {
-  // background-image: #{$local-bg-image};
+  background-image: #{$local-bg-image};
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
 
-$colorsMap: (
-  red: MAT_COLORS.$material-color-amber-a400,
-  green: MAT_COLORS.$material-color-light-green-a400,
-  blue: MAT_COLORS.$material-color-light-blue-a400,
-  purple: MAT_COLORS.$material-color-deep-purple-200,
-  orange: MAT_COLORS.$material-color-orange-a400,
-  yellow: MAT_COLORS.$material-color-amber-50,
-  pink: MAT_COLORS.$material-color-pink-a100,
-  teal: MAT_COLORS.$material-color-teal-a400,
-  cyan: MAT_COLORS.$material-color-cyan-a400,
-  lime: MAT_COLORS.$material-color-lime-a400,
-  brown: MAT_COLORS.$material-color-brown-a400,
+$underbarColors: (
+  "header-1": (
+    // barColor: MAT_COLORS.$material-color-red-100,
+    // barOutlineColor: MAT_COLORS.$material-color-red-200,
+    addend: 0%,
+    hasUnderbar: false,
+  ),
+  // no underbar for header 1;
+  "header-2": (
+      bar-color: MAT_COLORS.$material-color-red-100,
+      barOutlineColor: MAT_COLORS.$material-color-red-200,
+      addend: 0%,
+    ),
+  "header-3": (
+    bar-color: MAT_COLORS.$material-color-deep-orange-700,
+    barOutlineColor: MAT_COLORS.$material-color-deep-orange-900,
+    addend: 40%,
+    width-widget: 1,
+    isCenter: true,
+  ),
+  "header-4": (
+    bar-color: MAT_COLORS.$material-color-green-700,
+    barOutlineColor: MAT_COLORS.$material-color-green-900,
+    addend: 80%,
+    width-widget: 2,
+    isCenter: true,
+  ),
+  "header-5": (
+    bar-color: MAT_COLORS.$material-color-blue-700,
+    barOutlineColor: MAT_COLORS.$material-color-blue-900,
+    addend: 90%,
+    width-widget: 3,
+    isCenter: true,
+  ),
+  "header-6": (
+    bar-color: MAT_COLORS.$material-color-indigo-700,
+    barOutlineColor: MAT_COLORS.$material-color-indigo-900,
+    addend: 80%,
+    width-widget: 5,
+    isCenter: true,
+  ),
 );

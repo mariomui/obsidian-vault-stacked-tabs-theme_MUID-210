@@ -1,5 +1,6 @@
-@use "../shared/index.scss" as shared;
-@use "../base-colors.scss" as BASE_COLORS;
+@use "@shared" as shared;
+
+// @use "../base-colors.scss" as BASE_COLORS;
 //What does this do again?
 .markdown-rendered {
   tbody {
@@ -20,9 +21,9 @@
   color: white;
   text-shadow: 1px 4px 3px rgb(233 117 71 / 153%);
   // background: rgba(0, 0, 0, 0.6);
-  padding: 1em 0.5em;
+  // padding: 1em 0.5em;
   border-radius: 15px 15px 0 0;
-  margin-bottom: 0;
+  // margin-bottom: 0;
 }
 
 .markdown-source-view.mod-cm6.is-readable-line-width {
@@ -97,7 +98,7 @@
 
 // floating highlights toc
 .heading-list-item.located .text-wrap:not(.located) .text {
-  color: BASE_COLORS.$accent;
+  color: shared.$accent;
 }
 
 // H3 when bulletpoint

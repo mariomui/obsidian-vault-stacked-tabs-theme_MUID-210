@@ -1,4 +1,4 @@
-@use "./wallpapers/wallpapers.scss" as wp;
+@use "@shared/wallpapers/wallpapers.scss" as wp;
 
 %fixed-bg {
   background-image: #{wp.$mm-image};

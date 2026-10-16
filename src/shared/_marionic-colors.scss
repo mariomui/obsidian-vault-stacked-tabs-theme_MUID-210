@@ -1,6 +1,11 @@
 // double underscore is used to avoid conflicts with other files
 @use "@shared/__shared/raw-colors.scss" as raw-colors;
-@use "@shared/material-ui-colors" as MAT_COLORS;
+@use "@shared/material-ui-colors.scss" as MAT_COLORS;
+@use "sass:map";
+@use "sass:list";
+@use "sass:math";
+
+// @use "./index.scss" as shared;
 
 // # Overwrite of Obsidian Default Colors
 
@@ -44,20 +49,18 @@ $shade: rgba(0, 0, 0, 0.8);
 $bar-outline-color: MAT_COLORS.$material-color-blue-800;
 $bar-color: MAT_COLORS.$material-color-blue-900;
 
-// # Functions
-
-@function getRandomColor($colorsMap) {
-  // $note_color: color.adjust($note_color, $lightness: 10%, $saturation: 30%);
-  $random_color_index: random(length($colorsMap));
-
-  @each $key, $value in $colorsMap {
-    $index: index($colorsMap, $key $value);
-    @if $index == $random_color_index {
-      $note_color: map-get($colorsMap, $key);
-      @return $note_color;
-    }
-  }
-  @debug "Please check the colorsMap";
-  @return black;
-  // color.adjust($note_color, $lightness: 50%, $saturation: 30%);
-}
+$colorsMap: (
+  red: MAT_COLORS.$material-color-red-100,
+  green: MAT_COLORS.$material-color-green-200,
+  blue: MAT_COLORS.$material-color-light-blue-a400,
+  // ##00b0ff
+  purple: MAT_COLORS.$material-color-deep-purple-200,
+  orange: MAT_COLORS.$material-color-orange-a400,
+  yellow: MAT_COLORS.$material-color-yellow-400,
+  //#ffee58
+  pink: MAT_COLORS.$material-color-pink-a100,
+  teal: MAT_COLORS.$material-color-teal-a400,
+  cyan: MAT_COLORS.$material-color-cyan-300,
+  lime: MAT_COLORS.$material-color-lime-a400,
+  brown: MAT_COLORS.$material-color-brown-300,
+);
