@@ -1,0 +1,96 @@
+@use "sass:list";
+@use "sass:math";
+@use "sass:map";
+@use "@shared/marionic-colors" as MARIONIC;
+
+// you cannot randomize from shared location. This will run once only.
+// @function getRandomColor($colorsMap) {
+//   // $note_color: color.adjust($note_color, $lightness: 10%, $saturation: 30%);
+//   $random_color_index: random(list.length($colorsMap));
+//   @each $key, $value in $colorsMap {
+//     $index: #{list.index($colorsMap, $key $value)};
+//     @debug "getRandomColor" $random_color_index $value $index
+//       map.get($colorsMap, $key) "check";
+//     @if $index == $random_color_index {
+//       $note_color: map.get($colorsMap, $key);
+//       @return $note_color;
+//     }
+//   }
+//   // @debug "Please check the colorsMap";
+//   @return black;
+//   // color.adjust($note_color, $lightness: 50%, $saturation: 30%);
+// }
+
+@function map-get-default($map, $key, $default) {
+  $value: map.get($map, $key);
+  @return if(sass($value != null): $value; else: $default);
+}
+
+// @function getRandomColor($colorsMap: shared.$colorsMap) {
+//   // $note_color: color.adjust($note_color, $lightness: 10%, $saturation: 30%);
+//   $random_color_index: math.random(list.length($colorsMap));
+
+//   @each $key, $value in $colorsMap {
+//     $index: #{list.index($colorsMap, $key $value)};
+//     @if $index == $random_color_index {
+//       $note_color: map.get($colorsMap, $key);
+//       @return $note_color;
+//     }
+//   }
+
+//   @return black;
+// }
+@function getRandomColor($colorsMap: MARIONIC.$colorsMap) {
+  // $note_color: color.adjust($note_color, $lightness: 10%, $saturation: 30%);
+  // math.random will only activate once on compile.
+  $random_color_index: math.random(list.length($colorsMap));
+  // colorMap has 11 items.
+  // random will return 1 to 11;
+  $tuple: list.nth($colorsMap, $random_color_index);
+  @return list.nth(
+    $tuple,
+    2
+  ); // color.adjust($note_color, $lightness: 50%, $saturation: 30%);
+}
+
+@function list-remove($list, $index) {
+  $newList: ();
+  @for $i from 1 through list.length($list) {
+    @if $i != $index {
+      $newList: list.append($newList, list.nth($list, $i), "space");
+    }
+  }
+  @return $newList;
+}
+
+@function flattenMapToArray($map) {
+  // flatten;
+  $simple-list: [];
+  @for $i from 1 through list.length($map) {
+    $tuple: list.nth($map, $i);
+    $item: list.nth($tuple, 2);
+    $simple-list: list.append($simple-list, $item);
+  }
+  @return $simple-list;
+}
+@function createRandomizedListFrom($map) {
+  $items: flattenMapToArray($map);
+  $temp-pool: [];
+  $selected-items: []; // this will build the colors used;
+  $item: "";
+  // create new icon-colors without the color;
+  @for $j from 1 through list.length($map) {
+    // grab color from re-created array;
+    $idx: math.random((list.length($items)));
+    $item: list.nth($items, $idx);
+    $temp-pool: list-remove($items, $idx);
+
+    // main objective
+    $selected-items: list.append($selected-items, $item);
+
+    // resets;
+    $items: $temp-pool;
+  }
+
+  @return $selected-items;
+}

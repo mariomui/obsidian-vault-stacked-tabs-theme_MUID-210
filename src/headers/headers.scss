@@ -3,25 +3,17 @@
 @use "sass:map";
 @use "sass:list";
 @use "sass:meta";
+@use "./mixins.scss";
 
 // # Global Shared variables
-
-// ## Knobs
-
 :root {
+  // ## Knobs
   .HyperMD-list-line {
     --h1-color: #{shared.$material-color-red-300};
   }
 }
 // ## H1 Mixins
 // ### H1 background color color
-@mixin orange-to-right-color(
-  $deg: to bottom,
-  $col1: #{shared.$material-color-deep-orange},
-  $col2: #{shared.$material-color-red-900}
-) {
-  background-image: linear-gradient($deg, $col1, $col2);
-}
 
 /* # H1 styling Source */
 
@@ -59,14 +51,14 @@
         @include shared.orange-to-right-color();
         border: 2px solid #{shared.$material-color-brown-900};
         color: var(--material-color-brown-50);
-        padding: 0.2em 1em 0 1em;
+        // padding: 0.2em 1em 0 1em;
         border-radius: 0.5em 1.8em 0.3em 0.5em;
       }
 
       /* ## H1 when there is a tag inside it.  */
       &.cm-line:has(> span.cm-hashtag) {
         @include shared.orange-to-right-color();
-        outline: 2px solid #{shared.$material-color-deep-orange-300};
+        outline: 1px solid #{shared.$material-color-deep-orange-300};
       }
       &.cm-line:has(> span.cm-hashtag) > span {
         background-color: unset;
@@ -88,7 +80,7 @@
   .HyperMD-header {
     .HyperMD-header-1.cm-line + .HyperMD-header.HyperMD-header-1.cm-line {
       background: var(--material-color-deep-orange-800);
-      outline: 2px solid var(--material-color-brown-900);
+      outline: 1px solid var(--material-color-brown-900);
       /* color: var(--material-color-brown-50); */
       color: var(--material-color-brown-50);
       /* padding: 0.2em 1em; */
@@ -98,67 +90,60 @@
   }
 }
 
-// # Custom header underbar
-
-.HyperMD-header {
-  //shared
-  :is(
-    .cm-header-2,
-    .cm-header-3,
-    .cm-header-4,
-    .cm-header-5,
-    .cm-header-6
-  ):last-child {
-    &:after {
-      @include shared.shareHeaderStyle((shared.$bar-outline-color));
-
-      @include shared.manuBackgroundImageLG($baseHue: -30deg, $hueAdd: 100deg);
-    }
-  }
-}
-
 // # underbar looper
-
-.cm-line.HyperMD-header {
+.markdown-reading-view,
+.markdown-source-view .cm-line.HyperMD-header {
   $base-width-percentage: 100%;
   $multiple: 13%;
   @for $i from 1 through list.length(shared.$underbarColors) {
     // @debug list.nth(shared.$underbarColors, $i) "name";
-    $underbarColor: list.nth(
-      list.nth(shared.$underbarColors, $i),
-      2
-    ); // This is a tuple;
 
+    .el-h#{$i} > :first-child,
     &.HyperMD-header-#{$i} span.cm-header.cm-header-#{$i} {
       &:last-child::after {
-        $bar-color: list.nth($underbarColor, 1);
-        $bar-outline-color: list.nth($underbarColor, 2);
-        $addend: list.nth($underbarColor, 3);
-        @debug $i $bar-color $bar-outline-color $addend "underbar args";
-        @include shared.manuBackgroundImageLG(
-          $bar-color: ($bar-color),
-          $bar-outline-color: ($bar-outline-color)
-        );
+        $underbarColor: list.nth(
+          list.nth(shared.$underbarColors, $i),
+          2
+        ); // This is a tuple;
 
-        @include shared.clipPath($addend: $addend);
+        // properties
+        $hasUnderBar: shared.map-get-default($underbarColor, hasUnderBar, true);
+        $bar-color: shared.map-get-default($underbarColor, bar-color, null);
+        $bar-outline-color: shared.map-get-default(
+          $underbarColor,
+          barOutlineColor,
+          null
+        );
+        $width-widget: shared.map-get-default(
+          $underbarColor,
+          width-widget,
+          null
+        );
+        $isCenter: shared.map-get-default($underbarColor, isCenter, false);
+        $addend: shared.map-get-default($underbarColor, "addend", 0%);
+
+        @debug $i $bar-color $bar-outline-color $addend "underbar args";
+        @if ($i > 1) {
+          @if ($bar-color and $bar-outline-color) {
+            @include shared.manuBackgroundImageLG(
+              $bar-color: $bar-color,
+              $bar-outline-color: ($bar-outline-color)
+            );
+          }
+          @if $width-widget {
+            width: calc($base-width-percentage - $width-widget * $multiple);
+          }
+          @if $isCenter {
+            margin: 0 auto;
+          }
+          @if $hasUnderBar {
+            @include shared.shareHeaderStyle((shared.$bar-outline-color));
+          }
+
+          @include shared.clipPath($addend: $addend);
+        }
       }
     }
-  }
-  .cm-header-3:last-child:after {
-    width: calc($base-width-percentage - 1 * $multiple);
-    margin: 0 auto;
-  }
-  // .cm-header-4:last-child:after {
-  //   //
-  // }
-  .cm-header-5:last-child:after {
-    width: calc($base-width-percentage - 3 * $multiple);
-    margin: 0 auto;
-  }
-
-  .cm-header-6:last-child:after {
-    width: calc($base-width-percentage - 5 * $multiple);
-    margin: 0 auto;
   }
 }
 
@@ -194,7 +179,7 @@
     h1[data-heading="="] {
       background: shared.$material-color-deep-orange-900;
       outline: 2px solid var(--material-color-brown-700);
-      padding: 0.1em 2em;
+      // padding: 0.1em 2em;
       color: shared.$tertiary-blue-800;
       border-radius: 0 0 50px 50px;
     }
@@ -205,7 +190,7 @@
 .markdown-preview-sizer.markdown-preview-section h1[data-heading^="---"] {
   background: shared.$material-color-red-900;
   border: 2px dashed shared.$material-color-brown-700;
-  padding: 0.2em 3em;
+  // padding: 0.2em 3em;
   border-radius: 0.5em 1.8em 0.3em 0.5em;
 }
 
@@ -233,7 +218,7 @@ $header-levels: 6;
     .HyperMD-header.HyperMD-header-#{$i} {
       + .cm-line:not(.HyperMD-header) {
         // border: 1px solid blue;
-        margin-top: -0.5em !important;
+        // margin-top: -0.5em !important;
       }
     }
     .HyperMD-header.HyperMD-header-#{$i} {
@@ -278,10 +263,10 @@ $header-levels: 6;
         display: block;
         position: absolute;
         bottom: 0;
-        margin: 0 auto;
+        // margin: 0 auto;
         width: 70%;
         border-bottom: 1px solid shared.$material-color-red-a700;
-        margin-top: 0 !important;
+        // margin-top: 0 !important;
       }
     }
   }
@@ -294,9 +279,9 @@ $header-levels: 6;
       display: block;
       position: absolute;
       bottom: 0;
-      margin: 0 auto;
+      // margin: 0 auto;
       width: 75%;
-      margin-top: 0 !important;
+      // margin-top: 0 !important;
       border-bottom: 2px solid shared.$material-color-deep-orange-a200;
     }
   }

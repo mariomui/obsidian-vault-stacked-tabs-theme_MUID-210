@@ -1,0 +1,9 @@
+@use "@shared" as shared;
+
+@mixin orange-to-right-color(
+  $deg: to bottom,
+  $col1: #{shared.$material-color-deep-orange},
+  $col2: #{shared.$material-color-red-900}
+) {
+  background-image: linear-gradient($deg, $col1, $col2);
+}

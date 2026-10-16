@@ -6,9 +6,12 @@
 @forward "./long-form-leaf.scss";
 @forward "./slides.scss";
 @forward "./templater.scss";
-// @forward "./file-explorer-note-count.scss";
+@forward "./share-note.scss";
 // @forward "./fountain.scss";
 // @forward "./novel-word-count.scss";
+
+// # experimental
+// @forward "./file-explorer-note-count.scss";
 @use "@shared" as shared;
 
 // $local-write-good-color: #{shared.$borderColor};
@@ -98,6 +101,7 @@
           // display: block; // https://caniuse.com/?search=webkit-box all browsersuse webkit-box
           display: -webkit-box;
           -webkit-line-clamp: 2;
+          line-clamp: 2;
           overflow: hidden;
           -webkit-box-orient: vertical;
           text-overflow: ellipsis;
@@ -161,7 +165,7 @@
       color: #{shared.$material-color-purple-700};
       font-size: large;
       text-shadow: 1px 1px 2px #{shared.$material-color-deep-purple-200};
-      @include orange-to-right-color(
+      @include shared.orange-to-right-color(
         $deg: to bottom right,
         $col1: #{shared.$material-color-green-300},
         $col2: #{shared.$material-color-green-900}

@@ -1,0 +1,134 @@
+// there is a very specific way share note shows shit.
+
+.markdown-reading-view {
+  .callout-content {
+    p:has(span[alt*="nlk"]) {
+      margin: auto;
+    }
+
+    p:has(span[alt*="nlk"]) ~ .markdown-embed-content {
+      div.mod-header.mod-ui + div[class*="el-h"] {
+        display: none !important;
+      }
+    }
+  }
+
+  .callout-content,
+  .el-p {
+    p:has(span[alt*="nlk"]) ~ .markdown-embed-content {
+      h1[data-heading="="] {
+        display: none !important;
+      }
+      .inline-title {
+        display: none !important;
+      }
+      .mod-header.mod-ui + div[class*="el-h"] {
+        display: none !important;
+      }
+
+      .markdown-preview-view {
+        padding: 0;
+      }
+
+      .markdown-preview-sizer {
+        // background: #3b3b83;
+      }
+
+      div[class^="block-language"] {
+        .title {
+          // padding: 0.2rem 1.7rem 0.2rem 0.9rem;
+          // background: rgb(40, 42, 54);
+        }
+
+        .title::after {
+          border-top-right-radius: 5px;
+          border-left: var(--ec-frm-edActTabIndHt) solid
+            var(--ec-frm-edActTabIndTopCol);
+          border-right: var(--ec-frm-edActTabIndHt) solid
+            var(--ec-frm-edActTabIndTopCol);
+        }
+      }
+    }
+
+    p[dir]:has(.dataview-inline-query) {
+      margin: 0.5em auto !important;
+      padding: 0.5em 1em;
+      // border-radius: 5px 5px /* position: absolute; */
+      /* margin-block-start: 0; */
+    }
+
+    p[dir]:has(span[alt="nlk"]):has(~ .markdown-embed-content) {
+      display: none;
+    }
+  }
+  .el-pre {
+    div[class^="block-language"] {
+      .title {
+        padding: 0.2rem 1.7rem 0.2rem 0.9rem !important;
+        background: rgb(40, 42, 54);
+      }
+
+      .title::after {
+        border-top-right-radius: 5px;
+        border-left: var(--ec-frm-edActTabIndHt) solid
+          var(--ec-frm-edActTabIndTopCol);
+        border-right: var(--ec-frm-edActTabIndHt) solid
+          var(--ec-frm-edActTabIndTopCol);
+      }
+    }
+  }
+}
+
+.markdown-reading-view {
+  .callout-content {
+    max-height: 40vh;
+    container-type: scroll-state;
+    container-name: callout-scroll;
+    // blockquote > :first-child
+    blockquote {
+      margin: 0;
+      padding: 0;
+    }
+    .internal-embed.markdown-embed.inline-embed.is-loaded {
+      padding: 0;
+    }
+
+    .inline-embed > .markdown-embed-content > .markdown-preview-view {
+      padding: 0;
+    }
+
+    .markdown-preview-view.markdown-rendered.markdown-preview-sizer.markdown-preview-section
+      > div:last-child {
+      max-width: 100%;
+    }
+  }
+}
+
+@container callout-scroll scroll-state(scrollable:y) {
+  & {
+    overflow: auto;
+    // border: 3px solid blue;
+  }
+  // .callout-content > :first-child {
+  //   z-index: 5;
+  //   height: 45vh;
+  // }
+  .callout-content > :first-child {
+    z-index: 10;
+    &:before {
+      content: "scrollable";
+      z-index: 1;
+      font-style: italic;
+      display: block;
+      position: sticky;
+      top: 2.2ch;
+      line-height: 0;
+      /* right: 0; */
+      transform: rotate(90deg);
+      transform-origin: left top;
+      margin-left: 0.9rem;
+      font-size: 1.3rem;
+      width: fit-content;
+    }
+  }
+}
