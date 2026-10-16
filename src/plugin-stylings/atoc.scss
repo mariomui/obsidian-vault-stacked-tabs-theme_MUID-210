@@ -1,21 +1,10 @@
 @use "@shared" as shared;
+
 // Automatic table of contents plugin styling
 
 // Alternative color lines in the fashion of popover.
 
 .block-language-toc {
-  // li:nth-child(odd) a {
-  //   background-color: shared.$nbc;
-  // }
-  // li:nth-child(even) a {
-  //   background-color: shared.$calloutAlt;
-  //   padding-left: 0.1em;
-  // }
-
-  ul > li {
-    // background-color: shared.$dark-blue-grad;
-  }
-
   ul {
     & > li:nth-child(odd) {
       background-color: shared.$calloutAlt;
@@ -41,4 +30,5 @@
   }
   // background-color: shared.$callout;
   border: 0.1em solid shared.$embedBorderColor;
+  border-left: unset;
 }

@@ -79,8 +79,8 @@
 .markdown-source-view {
   .HyperMD-header {
     .HyperMD-header-1.cm-line + .HyperMD-header.HyperMD-header-1.cm-line {
-      background: var(--material-color-deep-orange-800);
-      outline: 1px solid var(--material-color-brown-900);
+      background: shared.$material-color-deep-orange-800;
+      outline: 1px solid shared.$material-color-brown-900;
       /* color: var(--material-color-brown-50); */
       color: var(--material-color-brown-50);
       /* padding: 0.2em 1em; */
@@ -178,7 +178,7 @@
   .markdown-embed-content .markdown-preview-sizer.markdown-preview-section {
     h1[data-heading="="] {
       background: shared.$material-color-deep-orange-900;
-      outline: 2px solid var(--material-color-brown-700);
+      outline: 2px solid shared.$material-color-brown-700;
       // padding: 0.1em 2em;
       color: shared.$tertiary-blue-800;
       border-radius: 0 0 50px 50px;
