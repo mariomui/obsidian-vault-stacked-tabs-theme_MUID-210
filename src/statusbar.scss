@@ -1,13 +1,41 @@
 // source: https://github.com/zcysxy/Obsidian-Terminal-Theme/blob/main/theme.css
 
 @use "@shared" as shared;
+
 /* STATUS BAR */
 .status-bar {
+  --cmdr-spacing: 0;
   --status-bar-height: 21px;
   --the-color: #{shared.$secondaryAlt};
   --the-background-color: #{shared.$primary};
   --status-bar-radius: 0;
 
+  .status-bar-item {
+    &.plugin-backlink {
+      // display: none;
+    }
+    &.plugin-properties {
+      display: none;
+    }
+    &.plugin-obsidian-task-progress-bar {
+      display: none;
+    }
+    &.plugin-longform {
+      display: none;
+    }
+    &.plugin-pane-relief {
+      display: none;
+    }
+    &.plugin-auto-note-mover {
+      display: none;
+    }
+    &.plugin-sync {
+      display: none;
+    }
+    &.plugin-editor-status {
+      display: none;
+    }
+  }
   justify-content: flex-end;
   gap: 0px;
   padding: 0;
