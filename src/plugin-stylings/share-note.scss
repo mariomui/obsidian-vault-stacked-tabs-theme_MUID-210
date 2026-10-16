@@ -1,4 +1,5 @@
 // there is a very specific way share note shows shit.
+// reading-view only;
 
 .markdown-reading-view {
   .callout-content {
@@ -130,5 +131,29 @@
       font-size: 1.3rem;
       width: fit-content;
     }
+  }
+}
+
+.markdown-reading-view {
+  // Remove private api ui
+  .el-h1:has(h1[data-heading="-"])
+    ~ :not(
+      .el-h1:has(h1[data-heading="="]),
+      .el-h1:has(h1[data-heading="="]) ~ *
+    ) {
+    display: none;
+  }
+  // remove private api endpoint label
+  .el-h1:has(h1[data-heading="-"]) {
+    display: none;
+  }
+
+  // Get rid of Transient api following siblings;
+  .el-h1:has(h1[data-heading^="---"]) ~ * {
+    display: none;
+  }
+  // remove first Transient api label.
+  .el-h1:has(h1[data-heading^="---"]) {
+    display: none;
   }
 }
