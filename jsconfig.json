@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"ignoreDeprecations": "6.0",
 		"baseUrl": ".",
 		"paths": {
 			"@shared/*": [
@@ -12,5 +13,5 @@
 	},
 	"exclude": [
 		"node_modules"
-	]
+	],
 }
