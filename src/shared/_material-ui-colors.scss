@@ -73,6 +73,9 @@ $material-color-pink-800: #ad1457;
 $material-color-pink-900: #880e4f;
 $material-color-pink: #e91e63;
 $material-color-pink-a100: #ff80ab;
+// #ff0c99
+$material-color-pink-a200: #ff4081;
+$material-color-pink-a400: #f50057;
 
 $material-color-purple-100: #e1bee7;
 $material-color-purple-200: #ce93d8;
@@ -81,7 +84,12 @@ $material-color-purple-800: #6a1b9a;
 $material-color-purple-900: #4a148c;
 
 $material-color-deep-purple-200: #b39ddb;
+// $material-color-deep-purple-300: #9575cd;
+// $material-color-deep-purple-400: #7e57c2;
+
 $material-color-deep-purple-a200: #7c4dff;
+$material-color-deep-purple-a400: #651fff;
+$material-color-deep-purple-a700: #6200ea;
 
 $material-color-purple-a100: #ea80fc;
 $material-color-purple-a200: #e040fb;
@@ -113,9 +121,13 @@ $material-color-amber-50: #fff8e1;
 
 // # LESS USED COLORS
 $material-color-teal-a400: #1de9b6;
+
+$material-color-cyan: #00bcd4;
 $material-color-cyan-200: #80deea;
 $material-color-cyan-300: #4dd0e1;
 $material-color-cyan-400: #26c6da;
+$material-color-cyan-500: $material-color-cyan;
+
 $material-color-cyan-a400: #00e5ff;
 $material-color-lime-a400: #c6ff00;
 
