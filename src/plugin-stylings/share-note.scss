@@ -1,3 +1,5 @@
+@use "@shared" as shared;
+@use "sass:map";
 // there is a very specific way share note shows shit.
 // reading-view only;
 
@@ -14,6 +16,18 @@
     }
   }
 
+  li {
+    span[alt*="nlk"] {
+      margin-top: 0;
+      .markdown-embed-content {
+        hr {
+          margin: 0.5rem 0;
+        }
+      }
+    }
+  }
+
+  //  shared between callout-content and flattened webview
   .callout-content,
   .el-p {
     p:has(span[alt*="nlk"]) ~ .markdown-embed-content {
@@ -148,6 +162,19 @@
     display: none;
   }
 
+  // remove + endpoint;
+  .el-h1:has(h1[data-heading="+"])
+    ~ :not(
+      .el-h1:has(h1[data-heading="="]),
+      .el-h1:has(h1[data-heading="="]) ~ *
+    ) {
+    display: none;
+  }
+  // remove private api endpoint label
+  .el-h1:has(h1[data-heading="+"]) {
+    display: none;
+  }
+
   // Get rid of Transient api following siblings;
   .el-h1:has(h1[data-heading^="---"]) ~ * {
     display: none;
@@ -155,5 +182,142 @@
   // remove first Transient api label.
   .el-h1:has(h1[data-heading^="---"]) {
     display: none;
+  }
+  // .el-h2:has(h2[data-heading^="---00÷"])
+  //   ~ :not(
+  //     .el-h2:has(h2[data-heading^="10 §"]),
+  //     .el-h2:has(h2[data-heading^="10 §"]) ~ *
+  //   ) {
+  //   display: none;
+  // }
+  // .el-h2:has(h2[data-heading^="---00÷"]) {
+  //   display: none;
+  // }
+}
+
+// # Share note only css
+
+// Increase the bottom padding of all share notes.
+html:has(link[href*="share.note.sx"]) {
+  .markdown-preview-sizer {
+    padding-bottom: 10%;
+  }
+}
+
+html:has(link[href*="share.note.sx"]) {
+  // callout TOC
+  .markdown-preview-sizer > .el-div {
+    .callout[data-callout="toc"] {
+      .callout-content {
+        .block-language-toc {
+          border: 0.1em solid shared.$embedBorderColor;
+          border-left-style: dashed;
+
+          display: flex;
+          flex-direction: column;
+          & > p:first-of-type {
+            display: none;
+          }
+          ul,
+          ol {
+            & > li:nth-child(even) > a {
+              color: shared.$altLinkColor;
+            }
+            a.internal-link[data-href^="#"] {
+              text-decoration: none;
+            }
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+
+            li {
+              &:before {
+                content: map.get(shared.$hrefToEmojiMap, "default");
+                white-space: nowrap;
+                left: -1em;
+                position: absolute;
+              }
+              @each $key, $item in shared.$hrefToEmojiMap {
+                &:has(a.internal-link[data-href^="#{$key}"]) {
+                  &:before {
+                    content: "#{$item}";
+                    white-space: nowrap;
+                    left: -1em;
+                    position: absolute;
+                  }
+                }
+              }
+            }
+          }
+
+          & > ul:first-of-type {
+            & > li {
+              grid-template-rows: 20% 80%;
+              display: grid;
+              grid-auto-flow: row;
+            }
+
+            ul li {
+              display: grid;
+              grid-template-columns: 4% 92%;
+              // grid-template-columns: 5% minmax(0, 1fr);
+
+              min-width: 0;
+
+              & > ul {
+                // any nested is pushed one bracket higher ranther than always to the 2nd bracket cell
+                grid-column: 1;
+                justify-self: end;
+              }
+
+              a.internal-link[data-href] {
+                grid-column: 2;
+                justify-self: start;
+                display: block;
+                min-width: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                // max-width: clamp(10ch, 18vw, 20ch);
+                max-width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .markdown-preview-sizer > .el-pre:has(> .block-language-toc) {
+    // Abstract APIS
+    .block-language-toc {
+      border: 0.2em solid shared.$accent;
+      border-left-color: shared.$altListItemColor;
+      border-right-color: shared.$altListItemColor;
+      > p:first-of-type {
+        display: none;
+      }
+
+      li {
+        &:before {
+          content: #{map.get(shared.$hrefToEmojiMap, "default")};
+          white-space: nowrap;
+          left: -1em;
+          position: absolute;
+        }
+        @each $key, $item in shared.$hrefToEmojiMap {
+          &:has(a.internal-link[data-href^="#{$key}"]) {
+            @if ($key == "#Abstract") {
+              display: none;
+            }
+            &:before {
+              content: "#{$item}";
+              white-space: nowrap;
+              left: -1em;
+              position: absolute;
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -1,5 +1,12 @@
 @use "@shared" as shared;
 
+// # sourc eview.
+.markdown-source-view {
+  .markdown-rendered .callout-content {
+    --size-4-6: 0px;
+    // start using global variables so as to future proof.
+  }
+}
 .markdown-source-view {
   .cm-contentContainer {
     .HyperMD-quote {
@@ -27,5 +34,10 @@
         }
       }
     }
+  }
+}
+.markdown-reading-view {
+  blockquote p {
+    color: shared.$material-color-orange-200;
   }
 }

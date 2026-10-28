@@ -5,6 +5,7 @@
 @forward "@shared/wallpapers/wallpapers.scss";
 @forward "@shared/material-ui-colors.scss";
 @forward "@shared/base-colors.scss";
+@forward "@shared/variables.scss";
 @use "@shared/_material-ui-colors.scss" as MAT_COLORS;
 @use "@shared/wallpapers/_wallpapers.scss" as wp;
 // raw colors isn't used anymore, but i keep it for reference.

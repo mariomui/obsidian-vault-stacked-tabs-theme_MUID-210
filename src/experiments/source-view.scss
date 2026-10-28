@@ -7,3 +7,15 @@
     }
   }
 }
+
+.inline-embed > .markdown-embed-content > .markdown-source-view,
+.inline-embed > .markdown-embed-content > .markdown-preview-view {
+  padding-left: 0;
+}
+
+.markdown-source-view {
+  .markdown-embed .markdown-preview-section div:last-child p,
+  .markdown-embed .markdown-preview-section div:last-child ul {
+    max-width: 95%;
+  }
+}

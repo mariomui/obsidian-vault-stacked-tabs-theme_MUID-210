@@ -1,16 +1,30 @@
 @use "@shared" as shared;
+
 .bases-table-container.mod-multiline .bases-table-cell {
   align-items: anchor-center;
 }
 .bases-view {
   .bases-group-heading {
-    background: #e4883c;
+    // background: #8c6749;
+    background: shared.$tertiary-blue-800;
     // a lighter shade of orange so it isnt as garish (testing)
     color: shared.$primary;
     .bases-group-property {
-      color: #3e2723;
+      // color: #3e2723;
       text-transform: uppercase;
       font-weight: 700;
+    }
+    .bases-group-value:not(:has(*)) {
+      color: shared.$borderColor;
+    }
+    .value-list-element:not(:has(.internal-link)) {
+      color: shared.$altListItemColor;
+    }
+    .value-list-element:has(.internal-link) {
+      color: shared.$embedPrimaryLinkColor;
+      &:has(.is-unresolved) {
+        color: shared.$unresolvedLinkColor;
+      }
     }
   }
   .bases-tbody {

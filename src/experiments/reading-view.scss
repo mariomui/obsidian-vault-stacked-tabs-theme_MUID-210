@@ -1,86 +1,86 @@
 @use "@shared" as shared;
+// !!! eventually deprecate this file. cuz all things have reading view. this file would become ginormous.
+%header-indent-position {
+  position: relative;
+  left: -0.02em;
+  color: #{shared.$accent};
+}
+// .markdown-reading-view {
+// 	.markdown-preview-sizer.markdown-preview-section {
+// 		background: blue;
+// 	}
+// }
+// merge this into header soon.
+@mixin reader-header-x-list {
+  $header-levels: 6;
 
-.view-content.pixel-banner {
-  .markdown-reading-view {
-    .markdown-preview-view {
-      background: #{shared.$shade} !important;
-      .BC-trail.markdown-preview-sizer.markdown-preview-section {
-        padding-top: 0 !important;
-        .pin-icon {
-          display: none !important;
-        }
-      }
-      .markdown-preview-sizer.markdown-preview-section {
-        padding-top: 0 !important;
-        .mod-header.mod-ui {
-          .inline-title {
-            padding: 1em;
-            background-color: shared.$shade;
-            border: 1px solid shared.$borderColor;
-            border-radius: 0.5em;
-            margin-bottom: 1em;
-            margin-top: 0.5em;
-          }
-          // background-color: transparent !important;
-        }
-        div:has(> h1[data-heading="="]) {
-          position: relative;
-          display: block;
-          &::after {
-            // content: "";
-            // position: absolute;
-            // margin-block-start: var(--p-spacing);
-            // margin-block-end: var(--p-spacing);
-
-            // height: 90vh;
-            // display: block;
-            // width: 100%;
-            // top: 0;
-            // margin-top: 3em;
-            // border-radius: 1.5em 1.5em;
-          }
+  @for $i from 2 through $header-levels {
+    // .HyperMD-header.HyperMD-header-#{$i} {
+    .el-h#{$i} {
+      > :first-child {
+        &::before {
+          // first-child is the worst name. I am the first child.
+          content: shared.repeat(":", $i - 1) + " ";
+          // css repeat doesn't work inside of css.
+          @extend %header-indent-position;
         }
       }
     }
   }
 }
-.markdown-reading-view {
-  h1[data-heading="-"] {
-    display: none;
-  }
-  div:has(> h1[data-heading="-"]) ~ * {
-    display: none;
-  }
 
-  // Reappear all the divs that follow the = mark but does not contain the --- mark.
-  // Effectively reappears the = content as as well as the content under ---
-
-  div:has(> h1[data-heading="="]) ~ * {
-    display: block;
-  }
-
-  // & > div:has(> h1[data-heading="-"]) {
-  //   display: none;
-  // }
-  div:has(> h1[data-heading="="]) {
-    display: block;
-  }
-
-  div:has(> h1[data-heading^="---"]) ~ div {
-    display: none;
-  }
-  // div:has(> h1[data-heading^="---"]) {
-  //   visibility: hidden;
-  // }
-
-  // ul.has-list-bullet {
-  //   li:nth-child(even) {
-  //     color: shared.$material-color-deep-purple-200;
-  //   }
-  //   li:nth-child(even) {
-  //     > a {
-  //       color: shared.$embedPrimaryLinkColor;
-  //     }
-  //   }
-  // }
+// the last child of any embedded content. preview view is the shared class between hover and embeds
+.markdown-reading-view
+  .markdown-preview-view.markdown-rendered
+  .markdown-preview-sizer.markdown-preview-section
+  > div:last-child {
+  max-width: 98%;
 }
+
+// .markdown-reading-view {
+//   h1[data-heading="-"] {
+//     display: none;
+//   }
+//   div:has(> h1[data-heading="-"]) ~ * {
+//     display: none;
+//   }
+
+//   // Reappear all the divs that follow the = mark but does not contain the --- mark.
+//   // Effectively reappears the = content as as well as the content under ---
+
+//   div:has(> h1[data-heading="="]) ~ * {
+//     display: block;
+//   }
+
+//   // & > div:has(> h1[data-heading="-"]) {
+//   //   display: none;
+//   // }
+//   div:has(> h1[data-heading="="]) {
+//     display: block;
+//   }
+
+//   // div:has(> h1[data-heading^="---"]) ~ div {
+//   //   display: none;
+//   // }
+//   // div:has(> h1[data-heading^="---"]) {
+//   //   visibility: hidden;
+//   // }
+
+//   // ul.has-list-bullet {
+//   //   li:nth-child(even) {
+//   //     color: shared.$material-color-deep-purple-200;
+//   //   }
+//   //   li:nth-child(even) {
+//   //     > a {
+//   //       color: shared.$embedPrimaryLinkColor;
+//   //     }
+//   //   }
+//   // }
+//   .el-hr hr {
+//     // border-width: medium;
+//     // border-color: #f19c08;
+//   }
+//   @include reader-header-x-list();
+// }
+
+// ---

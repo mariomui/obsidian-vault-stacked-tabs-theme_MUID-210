@@ -1,48 +1,53 @@
 @use "@shared" as shared;
 
-@import "./base-colors.scss"; // this needs to be refactore;
+// @import "./base-colors.scss"; // this needs to be refactore;
 
-@import "./material-ui-colors.scss";
+@use "./material-ui-colors.scss";
 
 // see src/index.html for other entrypoints
-@import "./statusbar.scss";
-@import "./tab-bar";
-@import "./embed-blocks";
-@import "./headers";
-@import "./embedded-headers.scss";
+@use "./statusbar.scss";
+@use "./tab-bar";
+@use "./embed-blocks";
+@use "./headers";
+@use "./embedded-headers.scss";
 
-@import "./by-views/index.scss"; // this is the main entrypoint for views, it imports all the views.
+@use "./by-views/index.scss" as by-views; // this is the main entrypoint for views, it uses all the views.
 
-@import "./table.scss";
-@import "./popover.scss";
-@import "./lists.scss";
+@use "./table.scss";
+@use "./popover.scss";
+@use "./lists.scss";
 
-@import "./plugin-stylings/index.scss";
-@import "./experiments/index"; // this may say experiments but i think i use this a ton
+@use "./plugin-stylings/index.scss" as plugin-stylings;
+@use "./experiments/index"; // this may say experiments but i think i use this a ton
 
-@import "./sliding-window/index.scss";
+@use "./sliding-window/index.scss" as sliding-window;
 
-@import "./migration/index.scss"; // here's where all the basic uses are;
+@use "./migration/index.scss" as migration; // here's where all the basic uses are;
 
 // start to put core plugins into core.
-@import "./core";
+@use "./core" as core;
 
 // # backrounds
-// @import "./migration/index.scss"; // migration of old scss be careful of using index
+// @use "./migration/index.scss"; // migration of old scss be careful of using index
 
 // customs on demand snippets
-@import "./cssclasses.scss";
+@use "./cssclasses.scss";
 
 // remove --- on every preview, regardless of popover or embed.
-.markdown-preview-sizer.markdown-preview-section {
-  min-height: fit-content !important;
-  h1[data-heading^="---"] {
-    > * {
-      display: none;
-    }
-    display: none;
-  }
-}
+// .markdown-preview-sizer.markdown-preview-section {
+//   min-height: fit-content !important;
+//   // this h1 is at the root level of document, so cannot use as an anchor hierarchy scoped h2
+//   //in practice this is too much. I want to see this in reading view.
+//   h1[data-heading^="---"] {
+//     > * {
+//       // display: none;
+//     }
+//     // display: none;
+//   }
 
-//  # INTERIM TESTING
-// can't target iframes because #document doesnt exist within root.
+//   h1[data-heading^="---"] {
+//     .el-h2 h2[data-heading="LR--TOC"] {
+//       display: block !important;
+//     }
+//   }
+// }

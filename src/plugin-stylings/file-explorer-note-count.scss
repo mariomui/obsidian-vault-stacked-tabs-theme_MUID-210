@@ -1,7 +1,11 @@
 @use "sass:color";
 @use "sass:list";
+@use "sass:map";
+@use "sass:math";
 
-@use "../shared/index.scss" as shared;
+// prototyping ... current note is disabled.
+// this entire note needs to be reworked so that different colors would be given to folders with files of large amount
+@use "@shared" as shared;
 
 // https://github.com/ozntel/file-explorer-note-count
 
@@ -10,24 +14,8 @@ $note_color: shared.$secondaryAlt;
 $num-colors: 100;
 
 @mixin random-bgr() {
-  color: getRandomColor();
+  color: shared.getRandomColor();
   font-weight: bold; /* Make text bolder */
-}
-
-@function getRandomColor() {
-  // $note_color: color.adjust($note_color, $lightness: 10%, $saturation: 30%);
-  $random_color_index: random(length(shared.$colorsMap));
-
-  @each $key, $value in shared.$colorsMap {
-    $index: index(shared.$colorsMap, $key $value);
-    @if $index == $random_color_index {
-      $note_color: map-get(shared.$colorsMap, $key);
-      @return $note_color;
-    }
-  }
-  @debug "Please check the colorsMap";
-  @return black;
-  // color.adjust($note_color, $lightness: 50%, $saturation: 30%);
 }
 
 // media queries dont work here in obsidianland
@@ -35,10 +23,11 @@ $num-colors: 100;
   // because of scope and pre-read-process behavior, anything dynamic inside of the curly braces can't be acted upon. Some exceptions like the computed value given by the widht of the containing element, but generally no.
   .nav-files-container .tree-item.nav-folder:nth-child(#{$i}) {
     .nav-folder-title[data-count] {
+      &[data-count]::after {
+        display: none;
+      }
+
       &[data-count]::before {
-        // "|";
-        /* background-color: var(--background-secondary-alt); */
-        /* border-radius: 3px; */
         @include random-bgr;
         content: attr(data-count) "\2009" "\2229";
         // display: inline-block;

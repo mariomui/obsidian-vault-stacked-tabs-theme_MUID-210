@@ -53,7 +53,11 @@
   ); // color.adjust($note_color, $lightness: 50%, $saturation: 30%);
 }
 
-@function list-remove($list, $index) {
+/// Removes a item from an simple list by index;
+/// @param {list} $list
+/// @param {number} $index
+/// @return {list} $newList
+@function _list-remove-by-index($list, $index) {
   $newList: ();
   @for $i from 1 through list.length($list) {
     @if $i != $index {
@@ -83,7 +87,7 @@
     // grab color from re-created array;
     $idx: math.random((list.length($items)));
     $item: list.nth($items, $idx);
-    $temp-pool: list-remove($items, $idx);
+    $temp-pool: _list-remove-by-index($items, $idx);
 
     // main objective
     $selected-items: list.append($selected-items, $item);

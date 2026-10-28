@@ -1,13 +1,185 @@
 @use "@shared" as shared;
+@use "sass:map";
 
 // Automatic table of contents plugin styling
 
 // Alternative color lines in the fashion of popover.
 
+.markdown-rendered {
+  // MUID-289 Abstract APIS
+  .block-language-toc:has(> p a[data-href=",aka-MUID-289-macro"]) {
+    border: 0.2em solid shared.$accent;
+    border-left-color: shared.$altListItemColor;
+    border-right-color: shared.$altListItemColor;
+
+    display: flex;
+    flex-direction: column;
+    & > p:first-of-type {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      order: 10;
+      padding: 0.5rem 0.5rem;
+      width: 90%;
+    }
+    ul,
+    ol {
+      & > li:nth-child(even) > a {
+        color: shared.$altLinkColor;
+      }
+      a.internal-link[data-href^="#"] {
+        text-decoration: none;
+      }
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      li {
+        @each $key, $item in shared.$hrefToEmojiMap {
+          &:has(a.internal-link[data-href^="#{$key}"]) {
+            @if ($key == "#Abstract") {
+              display: none;
+            }
+            &:before {
+              content: "#{$item}";
+              white-space: nowrap;
+              left: -1em;
+              position: absolute;
+            }
+          }
+        }
+      }
+
+      & > li {
+        display: grid;
+        grid-template-columns: 8% 92%;
+        // grid-template-columns: 5% minmax(0, 1fr);
+
+        min-width: 0;
+
+        & > ul {
+          // any nested is pushed one bracket higher ranther than always to the 2nd bracket cell
+          grid-column: 1;
+          justify-self: end;
+        }
+
+        a.internal-link[data-href] {
+          grid-column: 2;
+          justify-self: start;
+          display: block;
+          min-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+  //  MUID-148 TOC up top
+  .block-language-toc:has(> p a[data-href=",aka-MUID-148-macro"]) {
+    border: 0.1em solid shared.$embedBorderColor;
+    border-left-style: dashed;
+    display: flex;
+    flex-direction: column;
+    & > p:first-of-type {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      order: 10;
+      padding: 0.5rem 0.5rem;
+      width: 90%;
+    }
+    ul,
+    ol {
+      & > li:nth-child(even) > a {
+        color: shared.$altLinkColor;
+      }
+      a.internal-link[data-href^="#"] {
+        text-decoration: none;
+      }
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      li {
+        // apply defaults to emoji prefixes before note content;
+        &:before {
+          content: map.get(shared.$hrefToEmojiMap, "default");
+          white-space: nowrap;
+          left: -1em;
+          position: absolute;
+        }
+        @each $key, $item in shared.$hrefToEmojiMap {
+          &:has(a.internal-link[data-href^="#{$key}"]) {
+            &:before {
+              content: "#{$item}";
+              white-space: nowrap;
+              left: -1em;
+              position: absolute;
+            }
+          }
+        }
+      }
+    }
+
+    & > ul:first-of-type {
+      & > li {
+        // grid-template-rows: 20% 80%;
+        // display: grid;
+        // grid-auto-flow: row;
+      }
+      & > li {
+        a.internal-link[data-href^="#---Transient"] {
+          &:before {
+            content: "👻";
+            white-space: nowrap;
+            left: -1em;
+            position: absolute;
+          }
+        }
+      }
+      & > li:not(:has(> ul)):has(a.internal-link[data-href^="#---Transient"]) {
+        display: none;
+      }
+    }
+    ul li > ul {
+      li {
+        display: grid;
+        grid-template-columns: 6% 92%;
+        // grid-template-columns: 5% minmax(0, 1fr);
+
+        min-width: 0;
+
+        & > ul {
+          // any nested is pushed one bracket higher ranther than always to the 2nd bracket cell
+          grid-column: 1;
+          justify-self: end;
+        }
+
+        a.internal-link[data-href] {
+          grid-column: 2;
+          justify-self: start;
+          display: block;
+          min-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          // max-width: clamp(10ch, 18vw, 20ch);
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+.markdown-reading-view {
+  .block-language-toc {
+    .list-bullet {
+      display: none;
+    }
+  }
+}
 .block-language-toc {
   ul {
+    list-style-type: none !important;
     & > li:nth-child(odd) {
-      background-color: shared.$calloutAlt;
+      // background-color: shared.$calloutAlt;
       padding-left: 0.2em;
     }
     & > li:nth-child(even) {
@@ -15,7 +187,7 @@
     }
   }
   ul ul li:nth-child(odd) {
-    background-color: shared.$calloutAlt;
+    // background-color: shared.$calloutAlt;
     padding-left: 0.2em;
     &::marker {
       color: shared.$accentSecondary;
@@ -28,7 +200,4 @@
   & > li {
     background-color: shared.$callout;
   }
-  // background-color: shared.$callout;
-  border: 0.1em solid shared.$embedBorderColor;
-  border-left: unset;
 }

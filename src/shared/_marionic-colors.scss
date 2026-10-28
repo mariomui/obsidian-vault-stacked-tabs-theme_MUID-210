@@ -4,12 +4,14 @@
 @use "sass:map";
 @use "sass:list";
 @use "sass:math";
+@use "sass:color" as color;
 
 // @use "./index.scss" as shared;
 
 // # Overwrite of Obsidian Default Colors
 
-$italicColor: raw-colors.$material-color-deep-purple-200;
+$italicColor: #{MAT_COLORS.$material-color-pink-a200};
+// raw-colors.$material-color-deep-purple-200;
 
 // # good for single objects
 $secondary: raw-colors.$material-color-orange-800;
@@ -50,17 +52,24 @@ $bar-outline-color: MAT_COLORS.$material-color-blue-800;
 $bar-color: MAT_COLORS.$material-color-blue-900;
 
 $colorsMap: (
-  red: MAT_COLORS.$material-color-red-100,
   green: MAT_COLORS.$material-color-green-200,
   blue: MAT_COLORS.$material-color-light-blue-a400,
   // ##00b0ff
   purple: MAT_COLORS.$material-color-deep-purple-200,
-  orange: MAT_COLORS.$material-color-orange-a400,
-  yellow: MAT_COLORS.$material-color-yellow-400,
-  //#ffee58
-  pink: MAT_COLORS.$material-color-pink-a100,
   teal: MAT_COLORS.$material-color-teal-a400,
-  cyan: MAT_COLORS.$material-color-cyan-300,
-  lime: MAT_COLORS.$material-color-lime-a400,
   brown: MAT_COLORS.$material-color-brown-300,
+  orange: MAT_COLORS.$material-color-orange-a400,
+  red: MAT_COLORS.$material-color-red-100,
+  yellow: MAT_COLORS.$material-color-yellow-700,
+  pink: MAT_COLORS.$material-color-pink-a100,
+  cyan: MAT_COLORS.$material-color-cyan-500,
+  lime: MAT_COLORS.$material-color-lime-a400,
 );
+
+// Eventually switch over to controlling css variables with scss
+body {
+  --italic-color: #{$italicColor} !important;
+}
+@function shift-color($color) {
+  @return color.mix(#fff, $color, $weight: 80%);
+}

@@ -1,0 +1,68 @@
+@use "@shared" as shared;
+
+.expressive-code {
+  pre[data-language="md"] {
+    code {
+      counter-reset: idx 0 content-idx 0;
+      .ec-line:nth-child(odd) {
+        & > .code:has(*) {
+          background: shared.$material-color-brown-800;
+        }
+        .gutter {
+          background-color: shared.$material-color-brown-300;
+        }
+      }
+
+      .ec-line:nth-child(even) {
+        & > .code:has(*) {
+          background: shared.$tertiary-blue-900;
+        }
+        .gutter {
+          background-color: shared.$material-color-blue-300;
+        }
+      }
+
+      .ec-line:nth-child(n) {
+        .gutter {
+          color: shared.$material-color-grey-300;
+        }
+        counter-increment: content-idx 1;
+
+        & > .code:not(:has(*)) {
+          background: shared.$material-color-grey-300 !important;
+          &:before {
+            content: counter(idx) "st paragraph [⤴]";
+            color: black;
+            margin-left: -1rem;
+            padding-left: 0.2rem;
+          }
+
+          &:after {
+            display: block;
+            content: "";
+            height: 2px;
+            box-shadow: inset 0 -2px 0 #{shared.$nbc};
+            background: shared.$material-color-grey-700;
+            width: 116%;
+            margin-left: -1rem;
+          }
+          counter-increment: idx 1 content-idx -1;
+        }
+
+        &:last-child {
+          padding-bottom: 1em;
+          &::after {
+            counter-increment: idx 1;
+            content: counter(content-idx) " lines of text, and " counter(idx)
+              " paragraphs.";
+            color: white;
+            position: absolute;
+            font-weight: 600;
+            bottom: 0;
+            line-height: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

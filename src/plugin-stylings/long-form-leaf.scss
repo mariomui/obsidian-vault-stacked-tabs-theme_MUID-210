@@ -1,4 +1,6 @@
+@use "@shared" as shared;
 /* Font for the markdown source (edit) view */
+// .markdown-reading-view {
 .daily-note-editor,
 .longform-leaf {
   .cm-s-obsidian {
@@ -83,9 +85,6 @@
     text-align: justify;
   }
 
-  .suggestion-item.is-selected {
-    background-color: var(--text-accent);
-  }
   .markdown-preview-view blockquote {
     border-color: darkgrey;
     font-size: 95%;
@@ -120,14 +119,33 @@
       display: none;
     }
     .markdown-preview-sizer.markdown-preview-section {
-      min-height: auto !important;
-      padding-bottom: 0 !important;
+      min-height: 0 !important;
+      padding-bottom: 25% !important;
+    }
+    em {
+      color: shared.$material-color-grey-800;
+      font-weight: 400;
+      font-family: if(
+        supports(font-family: "Merriweather"): "Merriweather",
+        Georgia,
+        serif
+      );
     }
   }
 }
+// }
 
 // Undo daily note container's ungodly padding.
 .daily-note-container {
   min-height: unset !important;
   height: auto;
+}
+// for share note and custom longform-leaf plugin so the uploaded
+.markdown-reading-view {
+  .longform-leaf {
+    .markdown-preview-sizer {
+      min-height: 0 !important;
+      padding-bottom: 10% !important;
+    }
+  }
 }

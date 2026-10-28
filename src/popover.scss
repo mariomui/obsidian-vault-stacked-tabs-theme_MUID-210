@@ -31,10 +31,6 @@
   // embeded content in popover.
   .markdown-embed {
     .markdown-preview-view.markdown-rendered {
-      .metadata-container {
-        display: none;
-      }
-
       .markdown-preview-sizer.markdown-preview-section {
         // [!warning] This code requires the exact filtering cascade to only show elems between two specific h1s (- and =).
         // Dissapear all the divs that follow the h1 - but are not the the = sign.(effectively dissapearing any $elems that aren't - and =)
@@ -110,7 +106,7 @@
       }
     }
     @each $i in (1 5) {
-      @debug $i;
+      // @debug $i;
       .el-ul {
         ul.has-list-bullet {
           li[data-line="#{$i}"] {
@@ -163,8 +159,12 @@
 
 .popover.hover-popover {
   // remove frontmatter on popover.
-  .metadata-container {
-    display: none;
+  .markdown-embed {
+    .markdown-embed-content {
+      .metadata-container {
+        display: none !important;
+      }
+    }
   }
 }
 // # Create word wrap on code during popover

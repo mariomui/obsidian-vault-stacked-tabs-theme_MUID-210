@@ -81,43 +81,81 @@ $activeFileTitleColor: shared.$material-color-orange-600;
 //   // left: 0;
 // }
 
-/* fix for missing nw icons when app refocuses on icon clicks */
-// # TOP LEFT SPACE
-.workspace-tabs.mod-top.mod-top-left-space {
-  .workspace-tab-header-container-inner {
-    // every child below is now an icon.
-    padding-left: 2px;
+// remove vault switcher from side dock
+.workspace .workspace-sidedock-vault-profile {
+  display: none !important;
+}
 
-    // is active icon;
-    .workspace-tab-header.is-active {
-      outline: 2px solid shared.$material-color-red-700;
-      .workspace-tab-header-inner {
-        .workspace-tab-header-inner-icon > svg.svg-icon {
-          color: shared.$material-color-red-700 !important;
+// # Solution to the vanishing left sidebar toggle button when
+// stacked windows scroll too far right.
+.workspace-ribbon.side-dock-ribbon.mod-primary.is-collapsed {
+  &::before {
+    content: "";
+    visibility: hidden;
+  }
+}
+.workspace.is-sliding {
+  .workspace-split.mod-vertical.mod-root.is-sliding {
+    .workspace-tabs.mod-stacked.mod-top.mod-top-left-space {
+      .workspace-tab-header-container {
+        .sidebar-toggle-button.mod-primary.mod-left {
+          position: fixed !important;
+          top: 0;
+          left: 1ch;
+          align-items: center;
+          padding: 0 1px !important;
+          .clickable-icon {
+            color: shared.$material-color-light-green-a400;
+          }
         }
       }
     }
-    .workspace-tab-header {
-      // 👆 is every child element;
-      .workspace-tab-header-inner {
-        .workspace-tab-header-inner-icon > svg.svg-icon {
-          stroke-width: 3px;
-          color: shared.$material-color-orange-500;
+  }
+}
+
+/* fix for missing nw icons when app refocuses on icon clicks */
+// # TOP LEFT SPACE
+// class="workspace-tabs mod-top mod-top-left-space"
+.workspace-tabs.mod-top.mod-top-left-space {
+  .workspace-tab-header-container {
+    .workspace-tab-header-container-inner {
+      // every child below is now an icon.
+
+      // padding-left: 2px;
+
+      // is active icon;
+      .workspace-tab-header {
+        color: white;
+      }
+      .workspace-tab-header.is-active {
+        outline: 2px solid shared.$material-color-red-700;
+        .workspace-tab-header-inner {
+          .workspace-tab-header-inner-icon > svg.svg-icon {
+            color: shared.$material-color-red-700 !important;
+          }
         }
       }
-      $colors: shared.createRandomizedListFrom(
-        $map: shared.$colorsMap,
-      );
-
-      @for $i from 1 through list.length($colors) {
-        $color: list.nth($colors, $i);
-        &:nth-child(#{$i}) {
-          $color: $color !important;
-          background-color: $color;
+      .workspace-tab-header:not([data-type="markdown"]) {
+        // 👆 is every child element;
+        .workspace-tab-header-inner {
+          .workspace-tab-header-inner-icon > svg.svg-icon {
+            stroke-width: 3px;
+            color: shared.$material-color-orange-500;
+          }
         }
-        .workspace-tab-header-inner-icon > svg.svg-icon {
-          // $color: getRandomColor();
-          color: #0f1010 !important;
+        $colors: shared.createRandomizedListFrom(
+          $map: shared.$colorsMap,
+        );
+
+        @for $i from 1 through list.length($colors) {
+          $color: list.nth($colors, $i);
+          &:nth-child(#{$i}) {
+            // $color: $color !important;
+            background-color: $color;
+          }
+          .workspace-tab-header-inner-icon > svg.svg-icon {
+            color: #0f1010 !important;
+          }
         }
       }
     }

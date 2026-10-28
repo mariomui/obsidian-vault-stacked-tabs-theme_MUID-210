@@ -113,9 +113,18 @@
     .internal-embed[alt*="olk"].markdown-embed {
       // OLK Temporary
       .inline-title {
+        // visibility: hidden;
+        display: none;
+      }
+
+      // remove first item after the mod-header (fm and title) when olk.
+      // this removes the api endpoint being consumed.
+      // Omit LinK
+      .mod-header.mod-ui + * {
         display: none;
       }
     }
+    max-height: 33vh;
   }
 
   .internal-embed[alt="olk"].markdown-embed,
@@ -134,13 +143,15 @@
       padding-left: 5px !important;
       pointer-events: none;
     }
-    .markdown-embed-link[aria-label="Open link"] {
-      // display: none;
-    }
+    // .markdown-embed-link[aria-label="Open link"] {
+    //   // display: none;
+    // }
   }
 }
 
-// # Source View: Add alt list item colors to embedded lists in callouts
+// # Callout embeds
+
+// ## Source View: Add alt list item colors to embedded lists in callouts
 .markdown-source-view {
   .callout-content {
     .internal-embed.markdown-embed.is-loaded {
@@ -157,25 +168,37 @@
       }
     }
   }
+  .callout-content:has(span[alt^="TOC*"]) {
+    // padding: 0;
+    overflow-y: auto;
+    max-height: 28vh;
+    background-color: blue !important;
+  }
 }
 // --- end source view section --- //
+
+.markdown-reading-view {
+  .callout-content {
+    .markdown-embed-content {
+      .markdown-preview-sizer.markdown-preview-section {
+        min-height: 0 !important;
+      }
+    }
+  }
+}
 
 /** WORKING EMBED CONTAINER **/
 // embedded content
 .internal-embed.markdown-embed.inline-embed.is-loaded {
-  padding-left: 1em !important;
-  .markdown-preview-view.markdown-rendered {
-    // padding so that the click to enter the embed link doesn't interfere with buttons.
-    // padding-top: 1em;
-  }
+  padding-left: 0.2em !important;
 }
 
 /** : Tranclusion/Embed sections */
 // # NLK
 .internal-embed[alt*="nlk"] {
-  .markdown-embed-content:has(.markdown-embed-link) ~ .markdown-embed-link {
-    // display: none;
-  }
+  // .markdown-embed-content:has(.markdown-embed-link) ~ .markdown-embed-link {
+  //   // display: none;
+  // }
   &.markdown-embed.inline-embed.is-loaded
     .markdown-preview-view.markdown-rendered {
     padding-top: 0;
@@ -185,18 +208,18 @@
     .markdown-embed.inline-embed.is-loaded
       .markdown-preview-view.markdown-rendered {
       // background-color: blue;
-      padding: 0 !important;
-      padding-top: 0;
+      // padding: 0 !important;
+      // padding-top: 0;
     }
     .embed-title.markdown-embed-title {
-      display: none;
+      visibility: hidden;
     }
     .inline-title {
-      display: none;
+      visibility: hidden;
     }
-    .el-p p[dir="auto"] {
-      margin: 0;
-    }
+    // .el-p p[dir="auto"] {
+    //   margin: 0;
+    // }
     // padding: 0 !important;
     // padding-left: 5px !important;
     .markdown-preview-sizer.markdown-preview-section {
@@ -212,7 +235,7 @@
 
 span[alt*="nlk"] {
   &.internal-embed.markdown-embed {
-    padding: 0;
+    // padding: 0;
     .markdown-preview-sizer.markdown-preview-section {
       padding-left: 0 !important;
     }
@@ -280,9 +303,9 @@ span[alt*="nlk"] {
 
 /** ## Tranclusion/Embed sections */
 
-.internal-embed[alt*="nlk"].markdown-embed .embed-title.markdown-embed-title {
-  // display: none;
-}
+// .internal-embed[alt*="nlk"].markdown-embed .embed-title.markdown-embed-title {
+//   // display: none;
+// }
 .internal-embed[alt*="nlk"].markdown-embed
   .markdown-preview-sizer.markdown-preview-section {
   // padding: 0.1em 0 0 0 !important;
@@ -300,14 +323,14 @@ span[alt*="nlk"] {
 //   // Bug there second order transclusions are blank
 // }
 // If i leave this on, then embedded library notes vanish
-.internal-embed[alt*="nlk"].markdown-embed {
-  h2[data-heading] {
-    // display: none;
-  }
-}
+// .internal-embed[alt*="nlk"].markdown-embed {
+//   h2[data-heading] {
+//     // display: none;
+//   }
+// }
 
 span[alt*="nlk"].internal-embed.markdown-embed {
-  padding: 0;
+  // padding: 0;
 }
 span[alt*="nlk"].internal-embed.markdown-embed
   .markdown-preview-sizer.markdown-preview-section {
@@ -335,5 +358,33 @@ span[alt*="nlk"].internal-embed.markdown-embed
     transform: translateY(-50%);
     width: 2em;
     height: 2em;
+  }
+}
+
+// slowly transfer popover and all previewing scss into one file.
+// start using preview size as the main specifier.
+
+//  this is wildly dependent on the structure and prone to breaking.
+// this must be why they flattened the html structure. they wanted to know the embedded target would always the last child. In obsidian desktop app, the performance gains are neglible so they kept it as is but for web? flat.
+// oh no i was wrong, this code works for embedded because they havent gotten around to flattening it ... the flattening is something sharenote does to reading view ...
+.markdown-reading-view {
+  // all views have md-rendered right below it.
+  .markdown-rendered
+    > .markdown-preview-section
+    > div:last-child
+    > :last-child {
+    // el-pre <-- this is usually the class of this child
+    width: 97%;
+    ul {
+      padding-right: 1ch;
+    }
+  }
+}
+
+// remove the extra padding.
+.markdown-source-view {
+  .internal-embed[alt*="nlk"].markdown-embed
+    .markdown-preview-sizer.markdown-preview-section[style] {
+    min-height: 0 !important;
   }
 }

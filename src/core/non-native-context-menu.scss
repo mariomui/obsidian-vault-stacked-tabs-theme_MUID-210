@@ -1,5 +1,6 @@
 @use "sass:list";
 @use "@shared" as shared;
+
 // interimming.
 // TODO Since the css is shared between the explorer and the editor, it is impossible to target-omit a menu time (eg. "Create Folder Note")
 
@@ -151,11 +152,11 @@ $special-menu-items-to-hide: (
     }
 
     $special-menu-items-offset: 54;
-    $special-menu-items-to-show-count: length($special-menu-items-to-show);
+    $special-menu-items-to-show-count: list.length($special-menu-items-to-show);
 
     // Governs wikilink context menu items.
-    @for $i from 1 through length($special-menu-items-to-hide) {
-      $special-menu-item-to-hide: nth($special-menu-items-to-hide, $i);
+    @for $i from 1 through list.length($special-menu-items-to-hide) {
+      $special-menu-item-to-hide: list.nth($special-menu-items-to-hide, $i);
       &[data-stylizer-title^="#{$special-menu-item-to-hide}"] {
         display: none;
         & ~ .menu-separator {
@@ -165,7 +166,7 @@ $special-menu-items-to-hide: (
     }
 
     @for $i from 1 through $special-menu-items-to-show-count {
-      $special-menu-item-to-show: nth($special-menu-items-to-show, $i);
+      $special-menu-item-to-show: list.nth($special-menu-items-to-show, $i);
       &[data-stylizer-title^="#{$special-menu-item-to-show}"] {
         order: #{$i + $special-menu-items-offset};
       }
@@ -173,9 +174,9 @@ $special-menu-items-to-hide: (
 
     // Governs on-editor context menu items.
     $menu-items-offset: 22;
-    $menu-items-to-hide-count: length($menu-items-to-hide);
+    $menu-items-to-hide-count: list.length($menu-items-to-hide);
     @for $i from 1 through $menu-items-to-hide-count {
-      $_menu-item-to-hide: nth($menu-items-to-hide, $i);
+      $_menu-item-to-hide: list.nth($menu-items-to-hide, $i);
       &[data-stylizer-title^="#{$_menu-item-to-hide}"] {
         display: none;
         & ~ .menu-separator {
@@ -184,16 +185,16 @@ $special-menu-items-to-hide: (
         // order: #{$i + $menu-items-offset};
       }
     }
-    @for $i from 1 through length($menu-items-to-show) {
-      $_menu-item-to-show: nth($menu-items-to-show, $i);
+    @for $i from 1 through list.length($menu-items-to-show) {
+      $_menu-item-to-show: list.nth($menu-items-to-show, $i);
       &[data-stylizer-title^="#{$_menu-item-to-show}"] {
         order: #{$i + $menu-items-offset}; // offset is 22;
       }
     }
   }
   .menu-item.tappable {
-    @for $i from 1 through length($menu-items-with-seperators) {
-      $menu-items-with-seperator: nth($menu-items-with-seperators, $i);
+    @for $i from 1 through list.length($menu-items-with-seperators) {
+      $menu-items-with-seperator: list.nth($menu-items-with-seperators, $i);
       &[data-stylizer-title="#{$menu-items-with-seperator}"] {
         .menu-item-title::after {
           content: "";

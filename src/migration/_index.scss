@@ -1,7 +1,7 @@
 @forward "./stacked-tabs.scss";
-@use "@shared" as shared;
-
 @forward "./other.scss";
+
+@use "@shared" as shared;
 //inactive.scss is not forwarded
 
 // ! MIGRATION folder is still migrating. The goal is to migrate the current code to other files, however.
